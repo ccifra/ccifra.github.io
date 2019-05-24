@@ -1,0 +1,86 @@
+/*************************************
+* Tree
+* Base (Shared) CSS
+**************************************/
+
+ni-tree table {
+    user-select: text;
+}
+
+ni-tree .jqx-resize-trigger-container {
+    position: relative;
+}
+
+ni-tree > div.jqx-grid > div > div > div.jqx-scrollbar {
+    /*
+    Disables a JQX fadeout animation for the scrollbars on mobile.
+    Scrollbars still hide if they're not needed, because the JQX control
+    uses visibility=hidden not display=none for that.
+    */
+    display: block !important;
+    opacity: 1 !important;
+}
+
+ni-tree div.jqx-grid-header {
+    height: var(--ni-list-item-height) !important;
+}
+
+ni-tree div.jqx-grid-column-header {
+    box-sizing: content-box !important;
+}
+
+/*
+    Row Background
+*/
+
+ni-tree .jqx-grid-cell-alt:not(.jqx-fill-state-hover-legacy):not(.jqx-fill-state-pressed-legacy) {
+    background: var(--ni-grid-cell-alt-background-color);
+}
+
+ni-tree .jqx-fill-state-pressed-legacy {
+    background: var(--ni-selected-background);
+    color: var(--ni-selected-foreground-color);
+}
+
+/*
+    Row Background (selection disabled)
+*/
+
+ni-tree:not([allow-selection]) .jqx-fill-state-hover-legacy:not(.jqx-fill-state-pressed-legacy) {
+    background: inherit;
+}
+
+ni-tree:not([allow-selection]) .jqx-grid-cell-alt:not(.jqx-fill-state-pressed-legacy) {
+    background: var(--ni-grid-cell-alt-background-color);
+}
+
+/*
+    Font
+*/
+
+ni-tree .jqx-widget-header-legacy {
+    font-weight: inherit;
+}
+
+ni-tree .jqx-widget {
+    font: inherit;
+}
+
+ni-tree .jqx-widget-content {
+    font: inherit;
+}
+
+ni-tree .jqx-grid-content-legacy, ni-tree .jqx-widget-content-legacy {
+    font: inherit;
+}
+
+ni-tree .jqx-grid-table {
+    font: inherit;
+}
+
+ni-tree .jqx-grid-cell-legacy {
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    font-style: inherit;
+}

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Function</title>
+    <link href="ni-webvi-resource-v0/favicon.ico" type="image/x-icon" rel="icon">
+<link href="ni-webvi-resource-v0/Web/Styles/jqx.legacy.css" type="text/css" rel="stylesheet">
+<link href="ni-webvi-resource-v0/node_modules/ni-webcharts/styles/webchartsLight.css" type="text/css" rel="stylesheet">
+<link href="ni-webvi-resource-v0/node_modules/ni-webcharts-legends/styles/webcharts-legends.css" type="text/css" rel="stylesheet">
+<link href="ni-webvi-resource-v0/node_modules/ni-webcharts-legends/styles/webcharts-legends.icons.css" type="text/css" rel="stylesheet">
+<link href="ni-webvi-resource-v0/node_modules/dialog-polyfill/dialog-polyfill.css" type="text/css" rel="stylesheet">
+<link href="ni-webvi-resource-v0/Web/Styles/niDeployedPanelStyles.css" type="text/css" rel="stylesheet">
+<link href="ni-webvi-resource-v0/Web/Styles/niPanelStyles.css" type="text/css" rel="stylesheet">
+<link href="ni-webvi-resource-v0/Web/Styles/niControlStyles.base.css" type="text/css" rel="stylesheet">
+<link href="ni-webvi-resource-v0/Web/Styles/niControlStyles.ideTheme.css" type="text/css" rel="stylesheet">
+<link href="ni-webvi-resource-v0/Web/Styles/niTree.css" type="text/css" rel="stylesheet">
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/moduleLoadersCapture-alwaysfirstloaded.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/jquery/dist/jquery.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@webcomponents/webcomponentsjs/bundles/webcomponents-ce.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/nodelist-foreach-polyfill/index.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/globalization/globalize.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/globalization/globalize.culture.en-US.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niBrowserDetection.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niSupport.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/MathHelpers/MathHelpers.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niTaskTracker.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niSupport.i18n.strings.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niSupport.i18n.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niUIActivityService.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niNumerics.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niListBoxSelectionMode.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niCssProperties.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-element-interface.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-element.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-element/source/jqxelement-polyfills.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-element/source/jqxelement.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/dialog-polyfill/dialog-polyfill.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-dialog.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/jqxElementPre.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/ni-data-types/sources/niTimeStamp.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/ni-data-types/sources/niAnalogWaveform.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/ni-data-types/sources/niComplex.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/ni-data-types/sources/niNumericFormatters.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/ni-data-types/sources/niType.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxcomplex.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxdate.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxdraw.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxmath.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxnumeric.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxtickintervalhandler.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxbutton.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxcheckbox.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxled.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxpowerbutton.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxradiobutton.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxswitchbutton.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxlistbox.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxdropdownlist.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxcombobox.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxtextbox.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxmultilinetextbox.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxtank.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxgauge.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxslider.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxcalendar.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxdatetimepicker.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxnumerictextbox.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxtimepicker.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxprogressbar.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxscrollbar.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/@ni-kismet/jqx-elements/source/jqxtooltip.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/Constants/niEventIdConstants.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/Constants/niStringDisplayModeConstants.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/ValueConverters/niValueConverter.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/ValueConverters/niNumericValueConverter.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/ValueConverters/niJQXNumericValueConverter.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/ValueConverters/niJQXDateTimeValueConverter.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/ValueConverters/niJsonValueConverter.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/ValueConverters/niListBoxValueConverter.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/ValueConverters/niDropDownValueConverter.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/ValueConverters/niElementValueConverter.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/ValueConverters/niTextAlignmentValueConverter.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/ValueConverters/niDeepCopyValueConverter.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/ValueConverters/niStringDisplayModeConverter.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/ValueConverters/niColorValueConverters.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/PackedData/niPackedArrayAdaptor.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/PackedData/niPackedArrayUtils.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/PackedData/niPackedClusterDataAdaptor.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/PackedData/niPackedClusterValue.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/PackedData/niPackedComplexDoubleAdaptor.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/PackedData/niPackedComplexSingleAdaptor.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/PackedData/niPackedTimestampAdaptor.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/PackedData/niPackedWaveformAdaptor.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/PackedData/niPackedDataAdaptor.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/PackedData/niPackedDataAdaptors.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/PackedData/niPackedValueAdaptor.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/PackedData/PackedDataValues_generated.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niWebApplicationStates.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niTreeStates.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/ValueConverters/niTreeValueConverter.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxcore.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niForceGlobalJQXTheme.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxdata.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxmath.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxdraw.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxmenu.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxlistbox.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxbuttons.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxscrollbar.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxnumberinput.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxformattedinput.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxcomplexinput.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxslider.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxinput.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxpathcontrol.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxpopover.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxcheckbox.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxswitchbutton.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxribbon.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxprogressbar.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxtooltip.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxdropdownlist.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxexpander.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxcolorpicker.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxdropdownbutton.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxarray.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxgrid.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxgrid.aggregates.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxgrid.selection.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxgrid.columnsresize.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxgrid.edit.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxgrid.filter.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxgrid.sort.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxgrid.pager.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxgrid.grouping.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxdatatable.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/jsResources/jqwidgets/jqxtreegrid.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/flot/lib/jquery.event.drag.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/flot/lib/jquery.mousewheel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/flot/dist/es5/jquery.flot.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/flot-cursors-plugin/dist/es5/jquery.flot.cursors.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/flot-charting-plugin/dist/es5/jquery.flot.charting.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/flot-intensitygraph-plugin/jquery.flot.intensitygraph.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niGlobals.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niElementRegistrationService.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-web-application.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-virtual-instrument.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-visual-component.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-visual.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-string-control.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-layout-control.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-hyperlink.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-text.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-label.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-path-selector.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-url-image.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-cluster.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-flexible-layout-container.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-flexible-layout-group.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-flexible-layout-component.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-flexible-layout-wrapper.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-front-panel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-array-viewer.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-data-grid.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-data-grid-column.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/jqxtreehelpers.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-tree.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-opaque-refnum.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-layout-panel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-tab-control.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-tab-item.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-numeric-value-selector.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-enum-selector.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-ring-selector.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-radio-button-group.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/ni-webcharts/dist/es6-minified/webcharts.min.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/ni-webcharts-legends/dist/es6-minified/webcharts-legends.min.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niModelProvider.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niControlDataItemCache.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niControlDCOIndexCache.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niVireoStaticHelpers.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niVireoPeeker.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niVireoPoker.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niEditorDataAdapters.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niUpdateService.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niEditorInteractionStates.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niEditorUpdateService.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niLocalUpdateService.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niEditorRuntimeUpdateService.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niRemoteUpdateService.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/flatbuffers.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/Interop_generated.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niTestUpdateService.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niWebApplicationModelService.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niVIReferenceService.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niRenderBuffer.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niRenderEngine.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niBoundsUpdateEventService.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niLayoutTimer.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/niEventRegistrationService.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niRootModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niWebApplicationModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niVirtualInstrumentModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niVisualComponentModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niVisualModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niLayoutControlModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niNumericControlModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niNumericPointerModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niRadialNumericPointerModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niGaugeModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niLinearNumericPointerModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niSliderModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niTankModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niProgressBarModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niLinearProgressBarModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niRadialProgressBarModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niNumericTextBoxModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niGraphBaseModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niCursorModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niCartesianAxisModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niCartesianPlotModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niPlotRendererModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niCartesianGraphModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niChartModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niBooleanControlModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niBooleanContentControlModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niBooleanButtonModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niBooleanLEDModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niTextModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niLabelModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niHyperlinkModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niStringControlModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niPathSelectorModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niTimeStampTextBoxModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niUrlImageModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niCheckBoxModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niBooleanSwitchModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niBooleanPowerButtonModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niTabControlModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niTabItemModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niLayoutPanelModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niClusterModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niFlexibleLayoutContainerModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niFlexibleLayoutGroupModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niFlexibleLayoutComponentModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niFlexibleLayoutWrapperModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niFrontPanelModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niArrayViewerModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niDataGridModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niDataGridColumnModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niTreeModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niSelectorModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niDropDownModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niListBoxModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niOpaqueRefnumModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niPlotLegendModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niColorScaleModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niIntensityGraphModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niCursorLegendModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niScaleLegendModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niGraphToolsModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niNumericValueSelectorModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niEnumSelectorModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niRingSelectorModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Modeling/niRadioButtonGroupModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niWebApplicationViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niVirtualInstrumentViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niVisualComponentViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niVisualViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niLayoutControlViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niNumericControlViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niNumericScaleViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niNumericPointerViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niLinearNumericPointerViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niRadialNumericPointerViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niGaugeViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niSliderViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niTankViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niProgressBarViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niLinearProgressBarViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niRadialProgressBarViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niNumericTextBoxViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niCursorViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niCartesianAxisViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niCartesianPlotViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niGraphBaseViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niCartesianGraphViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niPlotRendererViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niChartViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niBooleanControlViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niBooleanContentControlViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niBooleanButtonViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niBooleanLEDViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niTextViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niLabelViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niHyperlinkViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niStringControlViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niPathSelectorViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niTimeStampTextBoxViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niUrlImageViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niCheckBoxViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niBooleanSwitchViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niBooleanPowerButtonViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niTabControlViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niTabItemViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niLayoutPanelViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niClusterViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niFlexibleLayoutContainerViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niFlexibleLayoutGroupViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niFlexibleLayoutComponentViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niFlexibleLayoutWrapperViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niFrontPanelViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niArrayViewerViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niDataGridViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niDataGridColumnViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niTreeViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niSelectorViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niDropDownViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niListBoxViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niOpaqueRefnumViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niPlotLegendViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niCursorLegendViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niScaleLegendViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niGraphToolsViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niColorScaleViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niIntensityGraphViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niNumericValueSelectorViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niEnumSelectorViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niRingSelectorViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Designer/niRadioButtonGroupViewModel.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/jqxElementCommonModule.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/jqxElementExtensions.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/webvi-websockets/source/main.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/node_modules/vireo/dist/wasm32-unknown-emscripten/release/vireo.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Elements/ni-element-registration.js" type="text/javascript"></script>
+<script defer="" src="ni-webvi-resource-v0/Web/Framework/moduleLoadersRestore-alwayslastloaded.js" type="text/javascript"></script>
+<style ni-autogenerated-style-id="">
+		/* Read only section. Source panel edits to the content of this style tag will not be persisted */
+        [ni-control-id='2'] { --ni-background: rgba(255,255,255,1); --ni-border-width: 0px 0px 0px 0px; height: 768px; --ni-margin: 0px 0px 0px 0px; --ni-padding: 30px 30px 30px 30px; width: 1024px; --ni-max-width: none; }
+        .ni-front-panel-wrapper { min-width: 1024px; }
+        [ni-control-id='3'] { --ni-border-width: 0px 0px 0px 0px; --ni-foreground-color: rgba(43,48,51,1); height: 360px; left: 68px; --ni-margin: 0px 0px 0px 0px; --ni-padding: 0px 0px 0px 0px; top: 212px; width: 920px; font-size: 12px; font-family: Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; }
+        [ni-control-id='9'] { font-size: 12px; font-family: Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; }
+        [ni-control-id='10'] { font-size: 12px; font-family: Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; }
+        [ni-control-id='11'] { font-size: 12px; font-family: Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; }
+        [ni-control-id='5'] { --ni-border-width: 0px 0px 0px 0px; --ni-foreground-color: rgba(43,48,51,1); height: 70px; left: 995px; --ni-margin: 0px 0px 0px 0px; --ni-padding: 0px 0px 0px 0px; top: 510px; width: 160px; font-size: 12px; font-family: Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; }
+        [ni-control-id='6'] { --ni-border-width: 0px 0px 0px 0px; --ni-foreground-color: rgba(43,48,51,1); height: 28px; left: 995px; --ni-margin: 0px 0px 0px 0px; --ni-padding: 0px 0px 0px 0px; top: 212px; width: 160px; font-size: 12px; font-family: Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; }
+        [ni-control-id='7'] { --ni-border-width: 0px 0px 0px 0px; --ni-foreground-color: rgba(43,48,51,1); height: 200px; left: 68px; --ni-margin: 0px 0px 0px 0px; --ni-padding: 0px 0px 0px 0px; top: 621px; width: 320px; font-size: 12px; font-family: Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; }
+        [ni-control-id='8'] { --ni-border-width: 0px 0px 0px 0px; --ni-foreground-color: rgba(43,48,51,1); height: 35px; left: 68px; --ni-margin: 0px 0px 0px 0px; --ni-padding: 0px 0px 0px 0px; top: 579px; width: 168px; font-size: 12px; font-family: Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; }
+        [ni-control-id='4'] { --ni-border-width: 0px 0px 0px 0px; --ni-foreground-color: rgba(43,48,51,1); height: auto; left: 68px; --ni-margin: 0px 0px 0px 0px; --ni-padding: 0px 0px 0px 0px; top: 192px; width: auto; font-size: 12px; font-family: Segoe UI, Frutiger, Frutiger Linotype, Dejavu Sans, Helvetica Neue, Arial, sans-serif; font-style: normal; font-weight: normal; text-decoration: none; }
+		/* End read only section. To add additional styles, add a new style tag after this one. */</style>
+
+</head>
+
+<body><ni-web-application location="BROWSER" engine="VIREO" vireo-source="Function.via.txt" wasm-url="ni-webvi-resource-v0/node_modules/vireo/dist/wasm32-unknown-emscripten/release/vireo.core.wasm"><ni-virtual-instrument vi-name="TestWeb::Function.gviweb"></ni-virtual-instrument></ni-web-application>
+    <div id="ni-outdated-browser-message" style="display:none">This browser is reporting compatibility with older browser technologies that may perform poorly if it all.</div>
+    <div id="ni-failed-to-load-vireo-source" style="display:none">
+        <div id="ni-failed-to-load-vireo-message-title">
+            Unable to load resource file
+        </div>
+        <div id="ni-failed-to-load-vireo-message-body">
+            Verify all WebVI files are available and served using an HTTP server or use a browser that can load files directly from the file system. See <a href="http://digital.ni.com/express.nsf/bycode/HOSTWEBAPP">Hosting a Web Application on a Server</a> for more information.
+        </div>
+    </div>
+    <div class="ni-front-panel-wrapper" vi-ref="" ni-control-id="FrontPanelWrapper">
+        <ni-front-panel control-resize-mode='fixed' layout='absolute' ni-control-id='2'>
+        
+            <ni-cartesian-graph binding-info='{"accessMode": "writeOnly", "dataItem": "dataItem_Graph", "dco": 0, "isLatched": false, "prop": "value", "sync": false, "unplacedOrDisabled": false}' control-resize-mode='resize-horizontally' follower-ids='["5", "6", "7", "8", "4"]' label-alignment='top-left' label-id='4' ni-control-id='3' ni-type='{"name": "Array", "rank": 1, "subtype": "Double"}' plot-area-margin='{"bottom": 0, "left": 0, "right": 0, "top": 0}' read-only='true' value='[]'>
+                <ni-cartesian-axis auto-scale='exact' axis-position='bottom' format='LVRelativeSeconds:G6&gt;&gt;0.000E+0' grid-lines='true' label='Time' maximum='100' minimum='0' ni-control-id='9' show-label='true' show-minor-ticks='true' show-tick-labels='all' show-ticks='true' time-format-epoch='-2082844800000'></ni-cartesian-axis>
+                <ni-cartesian-axis auto-scale='loose' axis-position='left' format='LVRelativeSeconds:G6&gt;&gt;0.000E+0' grid-lines='true' label='Amplitude' maximum='10' minimum='0' ni-control-id='10' show-label='true' show-minor-ticks='true' show-tick-labels='all' show-ticks='true' time-format-epoch='-2082844800000'></ni-cartesian-axis>
+                <ni-cartesian-plot hover-format='{0}, {1}' label='Plot' ni-control-id='11' show='true' show-label='true' xaxis='9' yaxis='10'>
+                    <ni-cartesian-plot-renderer area-base-line='negativeinfinity' area-fill='' bar-base-line='negativeinfinity' bar-fill='' line-stroke='rgba(150,36,40,1)' line-style='solid' line-width='1' ni-control-id='12' point-color='' point-shape='ellipse' point-size='7.0710678118654755'></ni-cartesian-plot-renderer>
+                </ni-cartesian-plot>
+            </ni-cartesian-graph>
+            <ni-scale-legend class='ni-hidden' control-resize-mode='fixed' graph-ref='3' ni-control-id='5'></ni-scale-legend>
+            <ni-plot-legend class='ni-hidden' control-resize-mode='fixed' graph-ref='3' ni-control-id='6'></ni-plot-legend>
+            <ni-cursor-legend class='ni-hidden' control-resize-mode='fixed' graph-ref='3' ni-control-id='7'></ni-cursor-legend>
+            <ni-graph-tools class='ni-hidden' control-resize-mode='fixed' graph-ref='3' ni-control-id='8'></ni-graph-tools>
+            <ni-label class='ni-hidden' control-resize-mode='fixed' label-alignment='top-left' ni-control-id='4' text='Graph'></ni-label>
+        </ni-front-panel>
+    </div>
+</body>
+</html>

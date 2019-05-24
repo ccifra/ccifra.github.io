@@ -1,0 +1,19 @@
+/****************************************************************
+* NI Deployed Panel Styles
+* National Instruments Copyright 2019
+*
+* This file should only contain CSS related to the panel / WebVI
+* itself (and panel layout modes) that we only want in deployed pages.
+*****************************************************************/
+
+ni-front-panel[layout="flexible"] {
+    align-items: initial;
+    width: 100%;
+}
+
+/* On screens that are 480px or less, get rid of the front panel padding */
+@media screen and (max-width: 480px) {
+    ni-front-panel[layout="flexible"] {
+        --ni-padding: 0px 0px 0px 0px;
+    }
+}

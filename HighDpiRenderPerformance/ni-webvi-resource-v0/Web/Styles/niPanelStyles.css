@@ -1,0 +1,362 @@
+/****************************************************************
+* NI Panel Styles
+* National Instruments Copyright 2018
+*
+* This file should only contain CSS related to the panel / WebVI
+* itself (and panel layout modes).
+* CSS specific to individual controls should go in
+* niControlStyles-base.css or niControlStyles-ideTheme.css.
+*****************************************************************/
+
+:root {
+    /* Variables for panel layout */
+    --ni-child-control-position: absolute;
+    --ni-max-width: none;
+    --ni-background: white;
+}
+
+/*************************************
+* Front Panel Canvas styling
+**************************************/
+/* Center the Front Panel on the page horizontally, for run panel and deployed pages.  Applied to the FrontPanelWrapper object. */
+.ni-front-panel-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* Clip the front panel canvas to its bounds, for run panel and deployed pages.  Applied to the FrontPanelCanvas. */
+ni-front-panel {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    background: var(--ni-background);
+}
+
+/* Make all elements of the front panel use flex-box styling.  Applied to the FrontPanelCanvas for flexible layout. */
+ni-front-panel[layout="flexible"] {
+    --ni-child-control-position: static;
+    box-sizing: border-box;
+    padding: var(--ni-padding);
+    max-width: var(--ni-max-width);
+    height: auto;
+    min-height: 768px;
+}
+
+/* When the panel is not in relative layout, all direct children with an ni-control-id will get absolute positioning. */
+ni-front-panel[layout="absolute"] > [ni-control-id] {
+    position: absolute; 
+}
+
+ni-front-panel[layout="flexible"] .ni-is-being-dragged {
+    position: absolute;
+}
+
+.ni-will-change-position {
+    will-change: left, top;
+}
+
+/*************************************
+* Flexible Layout Container
+**************************************/
+ni-flexible-layout-container {
+    display: flex;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    margin: var(--ni-margin);
+    padding: var(--ni-padding);
+    min-width: 0;
+    background: var(--ni-background);
+    border-width: var(--ni-border-width);
+    border-style: solid;
+    border-color: transparent;
+}
+
+ni-flexible-layout-container[direction="row"] {
+    flex-direction: row;
+}
+
+ni-flexible-layout-container[direction="column"] {
+    flex-direction: column;
+}
+
+/* Horizontal alignment options */
+ni-flexible-layout-container[direction="row"][horizontal-content-alignment="flex-start"] {
+    justify-content: flex-start;
+}
+
+ni-flexible-layout-container[direction="row"][horizontal-content-alignment="flex-end"] {
+    justify-content: flex-end;
+}
+
+ni-flexible-layout-container[direction="row"][horizontal-content-alignment="center"] {
+    justify-content: center;
+}
+
+ni-flexible-layout-container[direction="row"][horizontal-content-alignment="space-between"] {
+    justify-content: space-between;
+}
+
+ni-flexible-layout-container[direction="row"][horizontal-content-alignment="space-around"] {
+    justify-content: space-around;
+}
+
+ni-flexible-layout-container[direction="column"][horizontal-content-alignment="flex-start"] {
+    align-items: flex-start;
+}
+
+ni-flexible-layout-container[direction="column"][horizontal-content-alignment="flex-end"] {
+    align-items: flex-end;
+}
+
+ni-flexible-layout-container[direction="column"][horizontal-content-alignment="center"] {
+    align-items: center;
+}
+
+/* Vertical alignment options */
+ni-flexible-layout-container[direction="row"][vertical-content-alignment="flex-start"] {
+    align-content: flex-start;
+    align-items: flex-start;
+}
+
+ni-flexible-layout-container[direction="row"][vertical-content-alignment="flex-end"] {
+    align-content: flex-end;
+    align-items: flex-end;
+}
+
+ni-flexible-layout-container[direction="row"][vertical-content-alignment="center"] {
+    align-content: center;
+    align-items: center;
+}
+
+ni-flexible-layout-container[direction="row"][vertical-content-alignment="space-between"] {
+    align-content: space-between;
+    align-items: center;
+}
+
+ni-flexible-layout-container[direction="row"][vertical-content-alignment="space-around"] {
+    align-content: space-around;
+    align-items: center;
+}
+
+ni-flexible-layout-container[direction="column"][vertical-content-alignment="flex-start"] {
+    justify-content: flex-start;
+}
+
+ni-flexible-layout-container[direction="column"][vertical-content-alignment="flex-end"] {
+    justify-content: flex-end;
+}
+
+ni-flexible-layout-container[direction="column"][vertical-content-alignment="center"] {
+    justify-content: center;
+}
+
+ni-flexible-layout-container[direction="column"][vertical-content-alignment="space-between"] {
+    justify-content: space-between;
+}
+
+ni-flexible-layout-container[direction="column"][vertical-content-alignment="space-around"] {
+    justify-content: space-around;
+}
+
+/*************************************
+* Flexible Layout Component
+**************************************/
+ni-flexible-layout-component {
+    display: grid;
+    box-sizing: border-box;
+    max-width: 100%;
+    flex-grow: 0;
+    margin: var(--ni-margin);
+
+    /*
+    * The grid-template-columns and grid-template-rows properties define the grid columns and rows
+    * with a space-separated list of size values. The fr unit represents a fraction of the free space
+    * within the component.
+    */
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto 1fr auto;
+    
+    /*
+    *  The grid-template-areas property defines the grid template by referencing the names of grid areas.
+    *  A period represents an empty cell. The syntax itself provides a visualization of the grid.
+    */
+    grid-template-areas:
+        ".                       ni-top-label-grid-area          ."
+        "ni-left-label-grid-area ni-content-grid-area            ni-right-label-grid-area"
+        ".                       ni-bottom-label-grid-area       .";
+}
+
+ni-flexible-layout-component[layout-pattern="graph"] {
+    grid-template-columns: auto 1fr auto auto;
+    grid-template-rows: auto auto 1fr auto auto auto auto auto;
+    grid-template-areas:
+        ".                       ni-top-label-grid-area          .                        ."
+        "ni-left-label-grid-area ni-content-grid-area            ni-right-label-grid-area ni-plot-legend-grid-area"
+        "ni-left-label-grid-area ni-content-grid-area            ni-right-label-grid-area ni-scale-legend-grid-area"
+        ".                       ni-bottom-label-grid-area       .                        ."
+        ".                       ni-graph-tools-grid-area        .                        ."
+        ".                       ni-plot-legend-small-grid-area  .                        ."
+        ".                       ni-scale-legend-small-grid-area .                        ."
+        ".                       ni-cursor-legend-grid-area      .                        .";
+}
+
+/* The following four rules select primary control elements (i.e. not labels or graph parts) in flexible layout */
+ni-flexible-layout-component > :not([follower-ids="[]"]) {
+    grid-area: ni-content-grid-area;
+}
+
+ni-flexible-layout-component > [label-alignment$="-right"]:not([follower-ids="[]"]) {
+    justify-self: end;
+}
+
+ni-flexible-layout-component > [label-alignment$="-bottom"]:not([follower-ids="[]"]) {
+    align-self: end;
+}
+
+ni-flexible-layout-component > [label-alignment$="-center"]:not([follower-ids="[]"]) {
+    justify-self: center;
+    align-self: center;
+}
+
+ni-flexible-layout-component[control-resize-mode="both-directions"] > [ni-control-id][control-resize-mode="both-directions"],
+ni-flexible-layout-component[control-resize-mode="resize-horizontally"] > [ni-control-id][control-resize-mode="resize-horizontally"] {
+    width: 100%;
+}
+
+ni-flexible-layout-component[control-resize-mode="maintain-aspect-ratio"] > div {
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+ni-flexible-layout-component[control-resize-mode="maintain-aspect-ratio"] > div > [ni-control-id] {
+    display: block;
+    width: 100%;
+    height: auto;
+    left: 0px;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    position: absolute;
+}
+
+ni-flexible-layout-component.ni-is-being-dragged {
+    display: none;
+}
+
+/*************************************
+* Flexible Layout Group
+**************************************/
+ni-flexible-layout-group {
+    display: flex;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+/*************************************
+* Flexible Layout Wrapper
+**************************************/
+ni-flexible-layout-wrapper {
+    display: flex;
+    box-sizing: border-box;
+    flex-basis: 10px;
+    flex-grow: var(--ni-flex-grow);
+    max-width: 100%;
+}
+
+ni-front-panel.ni-descendant-drag-active ni-flexible-layout-wrapper {
+    position: relative;
+}
+
+
+/*************************************
+* Error message when Vireo load fails
+**************************************/
+#ni-failed-to-load-vireo-source {
+    background-color: rgba(235, 235, 245, 0.8);
+    font-family: Segoe UI,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif;
+    color: rgb(105, 109, 116);
+    padding: 8px;
+}
+
+#ni-failed-to-load-vireo-message-title {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+#ni-failed-to-load-vireo-message-body {
+    font-size: 14px;
+}
+
+/*************************************
+* Web Application
+**************************************/
+ni-web-application .ni-execution-buttons-box {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+}
+
+ni-web-application .ni-execution-button {
+    display: inline-block;
+    border: none;
+    border-radius: 15px;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 10px;
+}
+
+ni-web-application .ni-execution-button:active {
+    transform: translateY(5px);
+}
+
+/* Start button */
+ni-web-application .ni-execution-button.ni-start-button {
+    background-color: #64c868;
+    box-shadow: 0 10px #316533;
+}
+
+ni-web-application .ni-execution-button.ni-start-button:hover,
+ni-web-application .ni-execution-button.ni-start-button:focus {
+    background-color: #48934b;
+    outline: none;
+}
+
+ni-web-application .ni-execution-button.ni-start-button:active {
+    background-color: #48934b;
+    box-shadow: 0 5px #316533;
+}
+
+/* Abort button */
+ni-web-application .ni-execution-button.ni-abort-button {
+    background-color: #c86464;
+    box-shadow: 0 10px #4b2222;
+}
+
+ni-web-application .ni-execution-button.ni-abort-button:hover,
+ni-web-application .ni-execution-button.ni-abort-button:focus {
+    background-color: #7e3b3b;
+    outline: none;
+}
+
+ni-web-application .ni-execution-button.ni-abort-button:active {
+    background-color: #7e3b3b;
+    box-shadow: 0 5px #4b2222;
+}
+
+/* Disabled button */
+ni-web-application .ni-execution-button.disabled,
+ni-web-application .ni-execution-button.disabled:hover,
+ni-web-application .ni-execution-button.disabled:active {
+    background-color: #676767;
+    box-shadow: 0 10px #242424;
+    transform: none;
+}
+
+ni-web-application .ni-execution-button.disabled:focus {
+    background-color: #414141;
+}

@@ -1,0 +1,2482 @@
+/*************************************
+* NI Control Styles
+* Base (Structural) CSS
+**************************************/
+
+:root {
+    /* grid */
+    --ni-panel-grid-size: 16px;
+}
+
+/*************************************
+* HTML
+**************************************/
+
+html {
+    font-size: var(--ni-panel-grid-size);
+}
+
+/*************************************
+* User agent 
+**************************************/
+
+[ni-control-id] *,
+.jqx-widget *,
+.jqx-drop-down *,
+[ni-control-id] ::before,
+.jqx-widget ::before,
+.jqx-drop-down ::before,
+[ni-control-id] ::after,
+.jqx-widget ::after,
+.jqx-drop-down ::after {
+    box-sizing: border-box !important;
+}
+
+[ni-control-id] button,
+.jqx-widget button,
+.jqx-drop-down button,
+[ni-control-id] input,
+.jqx-widget input,
+.jqx-drop-down input,
+[ni-control-id] textarea,
+.jqx-widget textarea,
+.jqx-drop-down textarea,
+[ni-control-id] ul,
+.jqx-widget ul,
+.jqx-drop-down ul,
+[ni-control-id] li,
+.jqx-widget li
+.jqx-drop-down li {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    /*background: inherit;*/
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    font-style: inherit;
+}
+
+[ni-control-id] textarea,
+.jqx-widget textarea,
+.jqx-drop-down textarea {
+    resize: none;
+}
+
+[ni-control-id] ul,
+.jqx-widget ul,
+.jqx-drop-down ul,
+[ni-control-id] li,
+.jqx-widget li,
+.jqx-drop-down li {
+    list-style: none;
+}
+
+[ni-control-id] textarea,
+.jqx-widget input,
+.jqx-drop-down textarea,
+[ni-control-id] input,
+.jqx-widget textarea,
+.jqx-drop-down input {
+    border-radius: 0px; /* Disable iOS rounded corners inside our controls */
+}
+
+/*************************************
+* Icons (Shared)
+**************************************/
+
+@font-face {
+    font-family: 'NILVJSFontAwesome';
+    src: url('../../node_modules/font-awesome/fonts/fontawesome-webfont.woff') format('woff');
+}
+
+.ni-glyph,
+div[class*="jqx-arrow"], /* i.e. jqx-arrow-up, jqx-arrow-down, ... */
+div[class*="jqx-icon-arrow"], /* i.e. jqx-icon-arrow-up, jqx-icon-arrow-down-hover, ... */
+jqx-calendar jqx-repeat-button > .jqx-container {
+    font-family: 'NILVJSFontAwesome';
+    font-style: normal;
+    font-weight: normal;
+}
+
+div[class*="jqx-arrow"],
+div[class*="jqx-icon-arrow"],
+jqx-calendar jqx-repeat-button > .jqx-container {
+    font-size: 0.75rem;
+    line-height: 0;
+}
+
+.jqx-arrow-up::after,
+.jqx-icon-arrow-up::after,
+jqx-calendar .jqx-increment-year-button > .jqx-container::after {
+    content: '\f0d8';
+}
+
+.jqx-arrow-down::after,
+.jqx-icon-arrow-down::after,
+jqx-calendar .jqx-decrement-year-button > .jqx-container::after {
+    content: '\f0d7';
+}
+
+.jqx-arrow-left::after,
+.jqx-icon-arrow-left::after,
+jqx-calendar [prev-month] > .jqx-container::after {
+    content: '\f0d9';
+}
+
+.jqx-arrow-right::after,
+.jqx-icon-arrow-right::after,
+jqx-calendar [next-month] > .jqx-container::after {
+    content: '\f0da';
+}
+
+jqx-power-button .jqx-input,
+jqx-check-box[checked] .jqx-input,
+jqx-drop-down-list .jqx-drop-down-button,
+jqx-date-time-picker .jqx-calendar-button {
+    font-family: 'NILVJSFontAwesome';
+    font-style: normal;
+    font-weight: normal;
+}
+
+/* power button power icon */
+jqx-power-button .jqx-input::after {
+    content: '\F011';
+    font-size: 1.5em;
+}
+
+/* check box check mark */
+jqx-check-box[checked] .jqx-input::after {
+    content: '\f00c';
+    font-size: 0.75rem;
+}
+
+/* drop down arrow */
+jqx-drop-down-list .jqx-drop-down-button::after  {
+    content: '\f0d7';
+    font-size: var(--ni-content-font-size);
+}
+
+/* calendar icon */
+jqx-date-time-picker .jqx-drop-down-button.jqx-calendar-button::after {
+    content: '\f133';
+    font-size: var(--ni-content-font-size);
+}
+
+/*************************************
+* Animations
+**************************************/
+
+@-webkit-keyframes ni-indeterminate {
+     0%   {
+        left: -100%;    
+    }
+    50% {
+        left: 0%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+@keyframes ni-indeterminate {
+     0%   {
+        left: -100%;    
+    }
+    50% {
+        left: 0%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+@-webkit-keyframes ni-indeterminate-vertical {
+    0%   {
+        bottom: -100%;
+    }
+    50% {
+        bottom: 0%;
+    }
+    100% {
+        bottom: 100%;
+    }
+}
+
+@keyframes ni-indeterminate-vertical {
+    0%   {
+        bottom: -100%;
+    }
+    50% {
+        bottom: 0%;
+    }
+    100% {
+        bottom: 100%;
+    }
+}
+
+@-webkit-keyframes ni-rotate-circle {
+    50%   {
+         -webkit-transform: rotate(180deg);
+                 transform: rotate(180deg);
+    }
+    75% {
+        -webkit-transform: rotate(270deg);
+                transform: rotate(270deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+    }
+}
+
+@keyframes ni-rotate-circle {
+    50%   {
+         -webkit-transform: rotate(180deg);
+                 transform: rotate(180deg);
+    }
+    75% {
+        -webkit-transform: rotate(270deg);
+                transform: rotate(270deg);
+    }
+    100% {
+        -webkit-transform: rotate(360deg);
+                transform: rotate(360deg);
+    }
+}
+
+/*************************************
+* Shared 
+**************************************/
+
+[ni-control-id][readonly],
+[ni-control-id][readonly] * {
+    cursor: default !important;
+}
+
+.ni-hidden,
+.jqx-hidden {
+    display: none !important;
+}
+
+.ni-owning-control-hidden {
+    display: none;
+}
+
+.jqx-visibility-hidden {
+    visibility: hidden;
+}
+
+.jqx-resize-trigger-container {
+    display: block;
+    position: absolute;
+    visibility: hidden;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 1px;
+    overflow: hidden;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.jqx-resize-trigger, .jqx-resize-trigger-shrink {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.jqx-resize-trigger-shrink {
+    width: 200%;
+    height: 200%;
+}
+
+.jqx-container {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.jqx-content {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.jqx-input {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.jqx-drop-down,
+.jqx-date-time-drop-down {
+    position: absolute;
+    left: 0;
+    width: auto !important;
+    height: auto !important;
+    min-width: auto;
+    z-index: 9999;
+}
+
+/*************************************
+* Overflow
+**************************************/
+
+jqx-toggle-button > .jqx-container,
+ni-radio-button-group,
+jqx-list-box .jqx-list-items-container,
+jqx-switch-button .jqx-inner-container {
+    overflow: hidden;
+}
+
+jqx-toggle-button .ni-text,
+jqx-led .jqx-false-content-container,
+jqx-led .jqx-true-content-container,
+jqx-check-box .jqx-label,
+jqx-radio-button .jqx-label,
+jqx-list-item .jqx-list-item-container,
+jqx-drop-down-list .jqx-token,
+jqx-switch-button .jqx-false-content-container,
+jqx-switch-button .jqx-true-content-container,
+ni-tab-control .jqx-ribbon-item {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+ni-text > div,
+ni-hyperlink > .jqx-container {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+ni-hyperlink > .jqx-container {
+    white-space: pre-line;
+}
+
+ni-text > div {
+    white-space: pre-wrap;
+}
+
+/*************************************
+* Disabled state
+**************************************/
+
+[ni-control-id][disabled],
+[ni-control-id][disabled] * {
+    cursor: default;
+}
+
+/*************************************
+* Controls
+**************************************/
+
+[ni-control-id] {
+    line-height: calc(1em / 0.75);
+}
+
+/*************************************
+* Labels
+**************************************/
+
+ni-label {
+    display: flex;
+    align-items: center;
+    order: -1;
+}
+
+ni-label label {
+    white-space: pre;
+}
+
+ni-flexible-layout-component > ni-label[label-alignment^=top-] {
+    grid-area: ni-top-label-grid-area;
+    margin-bottom: 4px;
+}
+
+ni-flexible-layout-component > ni-label[label-alignment^=bottom-] {
+    grid-area: ni-bottom-label-grid-area;
+    margin-top: 4px;
+}
+
+ni-flexible-layout-component > ni-label[label-alignment^=left-] {
+    grid-area: ni-left-label-grid-area;
+    margin-right: 8px;
+}
+
+ni-flexible-layout-component > ni-label[label-alignment^=right-] {
+    grid-area: ni-right-label-grid-area;
+    margin-left: 8px;
+}
+
+ni-flexible-layout-component > ni-label[label-alignment$=-left] {
+    justify-self: start;
+}
+
+ni-flexible-layout-component > ni-label[label-alignment$=-right] {
+    justify-self: end;
+}
+
+ni-flexible-layout-component > ni-label[label-alignment$=-top] {
+    align-self: start;
+}
+
+ni-flexible-layout-component > ni-label[label-alignment$=-bottom] {
+    align-self: end;
+}
+
+ni-flexible-layout-component > ni-label[label-alignment$=-center] {
+    justify-self: center;
+    align-self: center;
+}
+
+/*************************************
+* Buttons
+**************************************/
+
+jqx-toggle-button > .jqx-container,
+jqx-power-button > .jqx-container,
+jqx-led > .jqx-container,
+jqx-check-box > .jqx-container  {
+    align-items: center;
+    cursor: pointer;
+}
+
+jqx-toggle-button > .jqx-container,
+jqx-power-button > .jqx-container,
+jqx-led > .jqx-container {
+    justify-content: center;
+}
+
+jqx-power-button .jqx-input,
+jqx-led .jqx-input {
+    width: 100%;
+    height: 100%;
+}
+
+jqx-check-box .jqx-input,
+jqx-radio-button .jqx-input {
+    width: var(--ni-checkbox-radio-size);
+    height: var(--ni-checkbox-radio-size);
+    flex-shrink: 0;
+}
+
+/*************************************
+* LED
+**************************************/
+
+jqx-led > .jqx-container {
+    border-radius: 50%;
+}
+
+jqx-led[shape='square'] > .jqx-container {
+    border-radius: 0px;
+}
+
+jqx-led .jqx-true-content-container,
+jqx-led[checked] .jqx-false-content-container {
+    display: none;
+} 
+
+jqx-led[checked] .jqx-true-content-container,
+jqx-led .jqx-false-content-container  {
+    display: block;
+} 
+
+jqx-led[checked] .jqx-true-content-container {
+    display: var(--ni-content-display);
+}
+
+jqx-led:not([checked]) .jqx-false-content-container {
+    display: var(--ni-content-display);
+}
+
+/*************************************
+* Radio button
+**************************************/
+
+jqx-radio-button .jqx-input::after {
+    content: '';
+    display: block;
+    width: var(--ni-radio-inner-size);
+    height: var(--ni-radio-inner-size);
+}
+
+/*************************************
+* Inner Buttons
+**************************************/
+
+jqx-drop-down-list .jqx-drop-down-button,
+jqx-numeric-text-box .jqx-numeric-text-box-radix-display,
+jqx-date-time-picker .jqx-calendar-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--ni-inner-button-width);
+    height: 100%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/*************************************
+* Spin buttons
+**************************************/
+
+jqx-numeric-text-box .jqx-spin-buttons-container,
+jqx-calendar .jqx-footer-component > span,
+ni-array-viewer .jqx-array-indexer > div {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    width: var(--ni-spin-button-width) !important;
+}
+
+jqx-numeric-text-box jqx-repeat-button,
+jqx-calendar .jqx-footer-component > span jqx-repeat-button,
+ni-array-viewer .jqx-array-indexer .jqx-action-button {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-height: 50%;
+}
+
+jqx-numeric-text-box jqx-repeat-button > .jqx-container,
+jqx-calendar jqx-repeat-button > .jqx-container,
+ni-array-viewer .jqx-array-indexer .jqx-action-button,
+ni-array-viewer .jqx-scrollbar-button-state-normal > div,
+jqx-scroll-bar div.jqx-scroll-button {
+    align-items: center; 
+    justify-content: center;
+    cursor: pointer;
+}
+
+/*************************************
+* Lists & items
+**************************************/
+ni-radio-button-group,
+jqx-list-box .jqx-list-items-inner-container,
+jqx-numeric-text-box .jqx-list-item {
+    display: flex;
+    flex-direction: column;
+}
+
+jqx-radio-button,
+jqx-list-item,
+jqx-numeric-text-box .jqx-list-item {
+    display: block;
+}
+
+jqx-radio-button > .jqx-container,
+jqx-list-item > .jqx-container,
+jqx-numeric-text-box .jqx-list-item {
+    height: var(--ni-list-item-height);
+    align-items: center;
+    cursor: pointer;
+}
+
+/*************************************
+* Radio button list
+**************************************/
+
+ni-radio-button-group[orientation='horizontal'] {
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+/*************************************
+* List box
+**************************************/
+
+jqx-list-box .jqx-list-items-container {
+    width: 100%;
+    height: 100%;
+}
+
+jqx-list-box .jqx-list-items-inner-container {
+    width: 100%;
+    height: 100%;
+}
+
+jqx-list-box .jqx-list-items-container.vscroll {
+    width: calc(100% - var(--ni-scroll-bar-size));
+}
+
+jqx-list-box jqx-scroll-bar:not([orientation='vertical']) {
+    display: none;
+}
+
+jqx-list-box jqx-list-item .jqx-content-label {
+    display: flex;
+    align-items: center;
+}
+
+/*************************************
+* List item
+**************************************/
+jqx-list-item[unselectable] {
+    opacity: 0.65;
+}
+
+/*************************************
+* Dropdown
+**************************************/
+
+ni-enum-selector > jqx-drop-down-list,
+ni-ring-selector > jqx-drop-down-list,
+jqx-drop-down-list jqx-list-box {
+    font-size: inherit !important;
+    font-family: inherit !important;
+}
+
+jqx-drop-down-list {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+ni-enum-selector > jqx-drop-down-list,
+ni-ring-selector > jqx-drop-down-list {
+    height: 100% !important;
+}
+
+jqx-drop-down-list > .jqx-container {
+    cursor: pointer;
+}
+
+jqx-drop-down-list .jqx-action-button {
+    display: flex;
+    flex-direction: column;
+    align-items: var(--ni-text-align-as-flex);
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    text-align: var(--ni-text-align);
+}
+
+jqx-drop-down-list .jqx-token {
+    max-width: 100%;
+}
+
+jqx-drop-down-list .jqx-drop-down {
+    min-width: 100%;
+}
+
+jqx-drop-down-list .jqx-buttons-container {
+    width: inherit;
+    height: inherit;
+    display: inherit;
+    flex-direction: inherit;
+    cursor: inherit;
+    position: inherit;
+    overflow: hidden;
+    min-height: inherit;
+}
+
+/*************************************
+* Ring
+**************************************/
+
+ni-ring-selector {
+    display: flex;
+}
+
+ni-ring-selector jqx-numeric-text-box {
+    display: none;
+}
+
+ni-ring-selector[allow-undefined] jqx-numeric-text-box {
+    display: block;
+    flex-shrink: 0;
+    width: var(--ni-numeric-value-width);
+}
+
+/*************************************
+* Text 
+**************************************/
+
+ni-text > div,
+ni-hyperlink > .jqx-container {
+    display: block;
+    align-items: var(--ni-text-align-as-flex);
+    width: 100%;
+    height: 100%;
+    text-align: var(--ni-text-align);
+}
+
+ni-text > div {
+    line-height: initial;
+}
+
+/*************************************
+* Hyperlink 
+**************************************/
+
+ni-hyperlink[readonly] > .jqx-container {
+    cursor: pointer !important;
+}
+
+/*************************************
+* Text boxes
+**************************************/
+
+jqx-numeric-text-box input,
+jqx-date-time-picker input,
+ni-array-viewer .jqx-array-indexer input {
+    width: 100%!important;
+    height: 100%!important;
+    min-width: 0px;
+}
+
+jqx-numeric-text-box, jqx-date-time-picker {
+    /* right-align to match editor default. Will also be used in the array where CSS vars aren't fully supported at runtime. */
+    --ni-text-align: right;
+}
+
+jqx-numeric-text-box input,
+jqx-date-time-picker input {
+    align-items: var(--ni-text-align-as-flex);
+    text-align: var(--ni-text-align);
+}
+
+/*************************************
+* String
+**************************************/
+
+ni-string-control textarea {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    align-items: var(--ni-text-align-as-flex);
+    text-align: var(--ni-text-align);
+    overflow-x: var(--ni-overflow-x);
+    overflow-y: var(--ni-overflow-y);
+    background: transparent;
+    line-height: 1em;
+    text-decoration: inherit;
+    color: inherit;
+}
+
+/*************************************
+* Numeric
+**************************************/
+
+jqx-numeric-text-box .jqx-numeric-text-box-radix-display {
+    order: -1;
+}
+
+jqx-numeric-text-box[readonly] .jqx-numeric-text-box-radix-display {
+    cursor: pointer !important;
+}
+
+jqx-numeric-text-box .jqx-list-item {
+    cursor: pointer !important;
+}
+
+/*************************************
+* Time stamp
+**************************************/
+
+jqx-date-time-picker .jqx-spin-buttons-container {
+    display: none; 
+}
+
+jqx-date-time-picker[readonly] .jqx-calendar-button,
+jqx-date-time-picker.ni-edit-time-indicator .jqx-calendar-button {
+    display: none;
+}
+
+jqx-date-time-picker[calendar-button] .jqx-calendar-button { 
+    display: flex;
+}
+
+jqx-date-time-picker .jqx-drop-down-content {
+    width: 100%;
+    height: 100%;
+}
+
+/*************************************
+* Calendar
+**************************************/
+
+jqx-calendar .jqx-calendar-container {
+    width: 100%;
+    height: 100%;
+}
+
+jqx-calendar .jqx-content {
+    flex-direction: column;
+    height: auto;
+}
+
+jqx-calendar .jqx-calendar-header jqx-repeat-button .jqx-arrow,
+jqx-calendar .jqx-footer jqx-repeat-button .jqx-arrow {
+    display: none;
+}
+
+jqx-calendar .jqx-calendar-header {
+    display: flex;
+    height: var(--ni-calendar-elements-size);
+}
+
+jqx-calendar .jqx-calendar-date-element {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+jqx-calendar .jqx-calendar-header jqx-repeat-button {
+    flex-shrink: 0;
+    width: var(--ni-calendar-elements-size);
+}
+
+jqx-calendar .jqx-calendar-week-titles,
+jqx-calendar .jqx-calendar-week {
+    display: flex;
+    justify-content: space-between;
+}
+
+jqx-calendar .jqx-calendar-week-titles div,
+jqx-calendar .jqx-calendar-week div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: var(--ni-calendar-elements-size);
+    height: var(--ni-calendar-elements-size);
+}
+
+jqx-calendar .jqx-calendar-week-titles div {
+    cursor: default;
+}
+
+jqx-calendar .jqx-calendar-week div {
+    position: relative;
+    padding: 0;
+    z-index: 1;
+    cursor: pointer;
+}
+
+jqx-calendar .jqx-calendar-week-number, 
+jqx-calendar .jqx-calendar-week-titles div:first-child {
+    display: none !important;
+}
+
+jqx-calendar .jqx-calendar-week div::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; 
+    z-index: -1;
+}
+
+jqx-calendar .jqx-other-month-date {
+    pointer-events: none;
+}
+
+jqx-calendar .jqx-footer {
+    display: flex;
+    align-items: center;
+}
+
+jqx-calendar .jqx-date-time-picker-footer {
+    display: flex;
+}
+
+jqx-calendar .jqx-footer-component {
+    display: flex;
+    height: var(--ni-calendar-elements-size);
+}
+
+/* Targets the container for the inc-dec buttons for the year and minute numerics of the calendar. */
+jqx-calendar .jqx-footer-component .jqx-hour-element + span,
+jqx-calendar .jqx-footer-component .jqx-minute-element + span {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+jqx-calendar .jqx-footer-component-today {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+
+jqx-calendar .jqx-footer-component-today .jqx-today-element {
+    position: absolute;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    font-size: 0;
+}
+
+jqx-calendar .jqx-footer-component-today::after {
+    content: 'Now';
+}
+
+jqx-calendar jqx-tooltip {
+    display: none;
+}
+
+/*************************************
+* Switch 
+**************************************/
+
+jqx-switch-button .jqx-inner-container {
+    display: flex;
+    align-items: center;
+    width: 100%!important;
+}
+
+jqx-switch-button[orientation='vertical'] .jqx-inner-container {
+    flex-direction: column;
+    height: 100%!important;
+}
+
+jqx-switch-button .jqx-false-content-container,
+jqx-switch-button .jqx-true-content-container {
+    flex-shrink: 0;
+    width: auto !important;
+    height: auto !important;
+    max-width: 100%;
+    cursor: default;
+}
+
+jqx-switch-button .jqx-false-content-container,
+jqx-switch-button[orientation='vertical'] .jqx-true-content-container {
+            order: 1;
+}
+
+jqx-switch-button .jqx-true-content-container,
+jqx-switch-button[orientation='vertical'] .jqx-false-content-container {
+    order: 3;
+}
+
+jqx-switch-button .jqx-true-content-container {
+    display: var(--ni-content-display);
+}
+
+jqx-switch-button .jqx-false-content-container {
+    display: var(--ni-false-content-display);
+}
+
+jqx-switch-button .jqx-thumb {
+    display: flex;
+    position: relative;
+    order: 2;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+jqx-switch-button  .jqx-thumb {
+    min-width: 2rem;
+    min-height: 0;
+}
+
+jqx-switch-button[orientation='vertical']  .jqx-thumb {
+    min-width: 0;
+    min-height: 2rem;
+}
+
+jqx-switch-button .jqx-thumb::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+jqx-switch-button .jqx-thumb::after {
+    content: '';
+    position: absolute;
+    top: 0.75rem;
+    left: 0;
+    width: 50%;
+    height: var(--ni-switch-thumb-size);
+}
+
+jqx-switch-button[orientation='vertical'] .jqx-thumb::after {
+    top: auto;
+    left: 0.75rem;
+    bottom: 0;
+    width: var(--ni-switch-thumb-size);
+    height: 50%;
+}
+
+jqx-switch-button[checked] .jqx-thumb::after {
+    left: auto;
+    right: 0;
+}
+
+jqx-switch-button[orientation='vertical'][checked] .jqx-thumb::after {
+    left: 0.75rem;
+    top: 0;
+    bottom: auto;
+}
+
+/*************************************
+* Scale
+**************************************/
+
+jqx-slider .jqx-scale,
+jqx-tank .jqx-scale {
+    position: relative;
+    flex-grow: 1;
+    flex-shrink: 0;
+}
+
+jqx-slider .jqx-tick,
+jqx-tank .jqx-tick {
+    position: absolute;
+    width: var(--ni-major-tick-length);
+    height: var(--ni-tick-stroke);
+}
+
+jqx-slider[orientation='horizontal'] .jqx-tick,
+jqx-tank[orientation='horizontal'] .jqx-tick {
+    width: var(--ni-tick-stroke);
+    height: var(--ni-major-tick-length);
+}
+
+jqx-slider .jqx-tick-minor,
+jqx-tank .jqx-tick-minor {
+    width: var(--ni-minor-tick-length);
+}
+
+jqx-slider[orientation='horizontal'] .jqx-tick-minor,
+jqx-tank[orientation='horizontal'] .jqx-tick-minor {
+    height: var(--ni-minor-tick-length);
+}
+
+jqx-slider .jqx-label,
+jqx-tank .jqx-label {
+    line-height: 1em;
+    position: absolute;
+    white-space: nowrap;
+}
+
+jqx-slider .jqx-scale-near .jqx-tick,
+jqx-tank .jqx-scale-near .jqx-tick {
+    right: 0;
+}
+
+jqx-slider .jqx-scale-near .jqx-label,
+jqx-tank .jqx-scale-near .jqx-label {
+    right: var(--ni-major-tick-length);
+}
+
+jqx-slider[ticks-visibility='none'] .jqx-label,
+jqx-tank[ticks-visibility='none'] .jqx-label {
+    right: 0;
+}
+
+jqx-slider[orientation='horizontal'] .jqx-scale-far .jqx-tick,
+jqx-tank[orientation='horizontal'] .jqx-scale-far .jqx-tick {
+    top: 0;
+}
+
+jqx-slider[orientation='horizontal'] .jqx-scale-far .jqx-label,
+jqx-tank[orientation='horizontal'] .jqx-scale-far .jqx-label {
+    top: var(--ni-major-tick-length);
+}
+
+jqx-slider[orientation='horizontal'][ticks-visibility='none'] .jqx-label,
+jqx-tank[orientation='horizontal'][ticks-visibility='none'] .jqx-label {
+    top: 0;
+}
+
+jqx-slider[ticks-visibility='major'] .jqx-tick-minor,
+jqx-slider[ticks-visibility='none'] .jqx-tick,
+jqx-tank[ticks-visibility='major'] .jqx-tick-minor,
+jqx-tank[ticks-visibility='none'] .jqx-tick {
+    visibility: hidden;
+}
+
+jqx-slider[labels-visibility='endPoints'] .jqx-label-middle,
+jqx-slider[labels-visibility='none'] .jqx-label,
+jqx-tank[labels-visibility='endPoints'] .jqx-label-middle,
+jqx-tank[labels-visibility='none'] .jqx-label {
+    visibility: hidden;
+}
+
+/*************************************
+* Slider & tank
+**************************************/
+
+jqx-slider > .jqx-container,
+jqx-tank > .jqx-container {
+    flex-direction: row;
+}
+
+jqx-slider[orientation='horizontal'] > .jqx-container,
+jqx-tank[orientation='horizontal'] > .jqx-container {
+    display: block;
+}
+
+jqx-slider .jqx-track,
+jqx-tank .jqx-track {
+    position: relative;
+}
+
+jqx-slider .jqx-resize-trigger-container,
+jqx-tank .jqx-resize-trigger-container {
+    position: relative;
+}
+
+jqx-slider[orientation='horizontal'] .jqx-track,
+jqx-tank[orientation='horizontal'] .jqx-track {
+    position: relative;
+}
+
+jqx-slider .jqx-track::before,
+jqx-tank .jqx-track::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+jqx-slider .jqx-value,
+jqx-tank .jqx-value {
+    position: relative;
+    bottom: 100%;
+    width: 100%;
+    height: 100%;
+}
+
+jqx-slider .jqx-thumb-label,
+jqx-tank .jqx-thumb-label {
+    display: none;
+}
+
+jqx-tank[orientation="horizontal"]:not([inverted]) .jqx-value {
+    margin-left: 0px !important;
+}
+
+/*************************************
+* Slider
+**************************************/
+
+jqx-slider .jqx-track-container {
+    display: flex;
+    cursor: pointer;
+}
+
+jqx-slider[orientation='horizontal'] .jqx-track-container {
+    flex-direction: column;
+}
+
+jqx-slider[orientation='vertical'] .jqx-track {
+    width: 1rem;
+    height: 100%;
+}
+
+jqx-slider[orientation='horizontal'] .jqx-track {
+    width: 100%;
+    height: 1rem;
+}
+
+jqx-slider .jqx-thumb {
+    position: absolute;
+    width: 100%;
+    height: var(--ni-slider-thumb-size);
+    top: 0;
+    left: 0;
+}
+
+jqx-slider[orientation='horizontal'] .jqx-thumb {
+    width: var(--ni-slider-thumb-size);
+    height: 100%;
+}
+
+jqx-slider .jqx-thumb ~ .jqx-thumb {
+    display: none;
+}
+
+jqx-slider .jqx-tooltip {
+    position: absolute;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    height: 1.5rem;
+    top: 0;
+    left: calc(100% + 0.25rem);
+}
+
+jqx-slider[orientation='horizontal'] .jqx-tooltip {
+    top: auto;
+    left: 0;
+    bottom: calc(100% + 0.25rem);
+}
+
+jqx-slider[orientation='horizontal'] .jqx-scale {
+    height: calc(100% - var(--ni-slider-thumb-size));
+}
+
+/*************************************
+* Tank
+**************************************/
+
+jqx-tank[scale-position='none'] .jqx-track {
+    width: 100%;
+}
+
+jqx-tank[orientation='horizontal'][scale-position='none'] .jqx-track {
+    height: 100%;
+}
+
+/*************************************
+* Linear progress 
+**************************************/
+
+jqx-progress-bar > .jqx-container {
+    overflow: hidden;
+}
+
+jqx-progress-bar > .jqx-container::before {
+    content: '';
+    width: 100%;
+    height: 100%;
+}
+
+jqx-progress-bar[orientation='vertical'] > .jqx-container::before {
+    width: 100%;
+    height: 100%;
+}
+
+jqx-progress-bar .jqx-value {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+jqx-progress-bar .jqx-value {
+    transform-origin: left;
+}
+
+jqx-progress-bar[orientation='vertical'] .jqx-value {
+    transform-origin: bottom;
+}
+
+jqx-progress-bar .jqx-value.jqx-value-animation {
+    width: 50%;
+    height: 100%; 
+    -webkit-transform: scaleX(1) !important; 
+            transform: scaleX(1) !important; 
+    -webkit-animation: ni-indeterminate 2s infinite linear; 
+            animation: ni-indeterminate 2s infinite linear; 
+}
+
+jqx-progress-bar[orientation='vertical'] .jqx-value.jqx-value-animation {
+    width: 100%;
+    height: 50%;
+    -webkit-animation: ni-indeterminate-vertical 2s infinite linear;
+            animation: ni-indeterminate-vertical 2s infinite linear;
+}
+
+/*************************************
+* Radial progress
+**************************************/
+
+jqx-circular-progress-bar > .jqx-container {
+    border-radius: 50%;
+}
+
+jqx-circular-progress-bar svg:first-of-type {
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+jqx-circular-progress-bar .jqx-value,
+jqx-circular-progress-bar .jqx-value-path {
+    stroke-width: 20%;
+    stroke-dasharray: 314.159;
+    fill: transparent;
+}
+
+jqx-circular-progress-bar .jqx-value-path {
+    stroke: transparent;
+    stroke-dashoffset: 0;
+}
+
+jqx-circular-progress-bar svg:first-of-type .jqx-value.jqx-value-animation {
+    stroke-dasharray: 257;
+}
+
+jqx-circular-progress-bar[indeterminate] svg:first-of-type,
+jqx-circular-progress-bar[value=null] svg:first-of-type {
+    -webkit-animation: ni-rotate-circle 1.5s infinite linear;
+    animation: ni-rotate-circle 1.5s infinite linear;
+}
+
+jqx-circular-progress-bar .jqx-label-container {
+    position: absolute;
+    left: 10%;
+    top: 10%;
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+}
+
+jqx-circular-progress-bar .jqx-resize-trigger-container {
+    position: relative;
+}
+
+/*************************************
+* Graph & chart legends
+**************************************/
+
+ni-plot-legend table,
+ni-cursor-legend table,
+ni-scale-legend table,
+ni-graph-tools table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+ni-plot-legend,
+ni-plot-legend .ni-details-box,
+ni-cursor-legend,
+ni-scale-legend,
+ni-graph-tools {
+    overflow: visible;
+}
+
+ni-flexible-layout-component > ni-graph-tools {
+    grid-area: ni-graph-tools-grid-area;
+    margin-top: 7px;
+}
+
+ni-flexible-layout-component > ni-plot-legend {
+    --ni-grid-area: ni-plot-legend-grid-area;
+    --ni-margin-left: 7px;
+    --ni-margin-top: 0px;
+    grid-area: var(--ni-grid-area);
+    margin-left: var(--ni-margin-left);
+    margin-top: var(--ni-margin-top);
+}
+
+ni-scale-legend {
+    border: 0;
+}
+
+ni-flexible-layout-component > ni-scale-legend {
+    --ni-grid-area: ni-scale-legend-grid-area;
+    --ni-margin-left: 7px;
+    --ni-margin-top: 0px;
+    grid-area: var(--ni-grid-area);
+    align-self: end;
+    margin-left: var(--ni-margin-left);
+    margin-top: var(--ni-margin-top);
+}
+
+ni-flexible-layout-component > ni-cursor-legend {
+    grid-area: ni-cursor-legend-grid-area;
+    margin-top: 7px;
+}
+
+
+ni-plot-legend,
+ni-cursor-legend {
+    height: auto !important;
+}
+
+ni-plot-legend div.ni-details-box {
+    /* prevent scrollbars in legend, due to inline height set in ni-plot-legend loadContent() */
+    height: auto !important;
+}
+
+@media screen and (max-width: 480px) {
+    ni-flexible-layout-component > ni-scale-legend {
+        --ni-grid-area: ni-scale-legend-small-grid-area;
+        --ni-margin-left: 0px;
+        --ni-margin-top: 7px;
+    }
+    ni-flexible-layout-component > ni-plot-legend {
+        --ni-grid-area: ni-plot-legend-small-grid-area;
+        --ni-margin-left: 0px;
+        --ni-margin-top: 7px;
+    }
+}
+
+/*************************************
+* Color picker
+**************************************/
+
+.legend-colorbox-colorbox {
+    height: auto !important;
+}
+
+.legend-colorbox-colorbox > div {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.jqx-color-picker-map-hue,
+.jqx-color-picker-panel,
+.jqx-color-picker-preview {
+    position: static !important;
+}
+
+.jqx-color-picker-map-hue,
+.jqx-color-picker-bar-hue {
+    height: 11rem !important;
+}
+
+.jqx-color-picker-bar-hue {
+    position: relative !important;
+    left: auto !important;
+    width: 1rem !important;
+    height: 11rem;
+}
+
+.jqx-color-picker-panel {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    height: auto !important;
+}
+
+.jqx-color-picker-panel > div {
+    display: flex;
+}
+
+.jqx-color-picker-panel > div:first-child {
+    display: flex;
+    order: -2;
+    width: 11rem;
+}
+
+.jqx-color-picker-preview {
+    order: -1;
+}
+
+.jqx-color-picker-panel > div input,
+.jqx-color-picker-panel > div span {
+    height: 1.5rem !important;
+}
+
+.jqx-color-picker-panel > div span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1rem;
+}
+
+div.jqx-color-picker-panel > div {
+    width: 100%;
+}
+
+.jqx-color-picker-panel > div input {
+    flex: 1;
+}
+
+.jqx-color-picker-panel > div:first-child input {
+    flex-grow: 1;
+}
+
+.jqx-color-picker-panel .jqx-color-picker-preview {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+}
+
+button.ni-snapshot-icon {
+    display: none;
+}
+
+/*************************************
+* Array
+**************************************/
+
+ni-array-viewer .jqx-array {
+    display: flex;
+    align-items: flex-start;
+}
+
+ni-array-viewer .jqx-array-indexer-container {
+    flex-shrink: 0;
+}
+
+ni-array-viewer .jqx-array-indexer {
+    display: flex;
+    width: 100%!important;
+    height: 2rem !important;
+}
+
+ni-array-viewer .jqx-array-indexer input {
+    margin: 0 !important;
+}
+
+ni-array-viewer .jqx-array-indexer .jqx-action-button {
+    display: flex;
+    width: 100%!important;
+    margin-left: 0 !important;
+}
+
+ni-array-viewer .jqx-array-indexer .jqx-action-button > .jqx-input-icon {
+    height: auto !important;
+    /* override webcharts-legends.icons.css */
+    background-image: none; 
+}
+
+ni-array-viewer .ni-array-viewer-box {
+    width: 100% !important;
+    height: auto !important;
+}
+
+ni-array-viewer .jqx-array-big-container {
+    display: flex;
+    position: relative;
+    width: 100% !important;
+    padding: 2px 2px 0px 2px;
+}
+
+ni-array-viewer[is-empty] .jqx-array-big-container {
+    min-width: 72px;
+    min-height: 72px;
+}
+
+ni-array-viewer:not([is-empty]) .jqx-array-big-container {
+    height: 100% !important;
+}
+ni-array-viewer .jqx-array-central-container {
+    width: 100% !important;
+}
+
+ni-array-viewer[orientation="vertical"][vertical-scrollbar-visibility] .jqx-array-central-container {
+    width: calc(100% - var(--ni-scroll-inner-size)) !important;
+}
+
+ni-array-viewer table {
+    border: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+    padding: 0;
+    margin: 0;
+}
+
+ni-array-viewer tbody,
+ni-array-viewer tr,
+ni-array-viewer td {
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+ni-array-viewer .jqx-array-element > * {
+    display: block;
+    /* The IDE currently emits a Left/Top for template controls that we don't want to apply to the cloned controls. */
+    left: 0px !important;
+    top: 0px !important;
+}
+
+ni-array-viewer .jqx-array-scrollbar-container-horizontal {
+    width: 100%!important;
+}
+
+ni-array-viewer .jqx-array-scrollbar-container-vertical {
+    height: 100%!important;
+}
+
+ni-array-viewer[vertical-scrollbar-visibility][horizontal-scrollbar-visibility]:not([dimensions="1"]) .jqx-array-scrollbar-container-vertical {
+    height: calc(100% - var(--ni-scroll-bar-size)) !important;
+}
+
+ni-array-viewer .jqx-array-scrollbar-vertical,
+ni-array-viewer .jqx-array-scrollbar-vertical .jqx-scrollbar-state-normal {
+    width: var(--ni-scroll-inner-size) !important;
+}
+
+ni-array-viewer .jqx-array-scrollbar-horizontal,
+ni-array-viewer .jqx-array-scrollbar-horizontal .jqx-scrollbar-state-normal {
+    height: var(--ni-scroll-inner-size) !important;
+}
+
+ni-array-viewer div.jqx-array-central-container {
+    display: inline-block !important;
+}
+
+ni-array-viewer div.jqx-array-scrollbar-container-vertical,
+ni-array-viewer div.jqx-array-scrollbar-container-horizontal {
+    display: none !important;
+}
+
+ni-array-viewer[vertical-scrollbar-visibility] div.jqx-array-scrollbar-container-vertical {
+    display: inline-block !important;	
+}
+
+ni-array-viewer[horizontal-scrollbar-visibility] div.jqx-array-scrollbar-container-horizontal {
+    display: block !important;
+}
+
+ni-array-viewer[vertical-scrollbar-visibility] .jqx-array-scrollbar-vertical {
+    display: block !important;
+}
+
+ni-array-viewer[horizontal-scrollbar-visibility] .jqx-array-scrollbar-horizontal {
+    display: block !important;
+}
+
+/* If the user enables scrollbar then changes orientation for a 1D array, the property value is still true for the opposite orientation
+   (just disabled / grayed out in right rail) so it's also sent to JS that way. However we don't want to render it
+   (it would overlap the controls).
+*/
+ni-array-viewer[dimensions="1"][orientation="horizontal"][vertical-scrollbar-visibility] div.jqx-array-scrollbar-container-vertical,
+ni-array-viewer[dimensions="1"][orientation="vertical"][horizontal-scrollbar-visibility] div.jqx-array-scrollbar-container-horizontal {
+    display: none !important;
+}
+
+/* Bug workaround, see CAR 712004 */
+ni-array-viewer[dimensions="1"][rows-and-columns="1,1"] div.jqx-array-scrollbar-container-vertical {
+    display: none !important;
+}
+
+ni-array-viewer .jqx-scrollbar-button-state-normal:last-child {
+    left: auto !important;
+    right: 0;
+}
+
+ni-array-viewer .jqx-scrollbar-button-state-normal > div {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-image: none; /* override */
+}
+
+ni-array-viewer .jqx-scrollbar-thumb-state-normal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+ni-array-viewer .jqx-scrollbar-thumb-state-normal-horizontal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+ni-array-viewer .jqx-scrollbar-thumb-state-normal::before,
+ni-array-viewer .jqx-scrollbar-thumb-state-normal-horizontal::before {
+    content: '';
+}
+
+ni-array-viewer .jqx-scrollbar-thumb-state-normal::before {
+    width: var(--ni-scroll-thumb-size);
+    height: 100%;
+}
+
+ni-array-viewer .jqx-scrollbar-thumb-state-normal-horizontal::before {
+    width: 100%;
+    height: var(--ni-scroll-thumb-size);
+}
+
+/*************************************
+* Cluster
+**************************************/
+
+ni-cluster {
+    position: relative;
+    overflow: hidden;
+}
+
+ni-cluster > [ni-control-id] {
+    position: absolute;
+}
+
+/*************************************
+* Tab container
+**************************************/
+
+ni-tab-control {
+    display: flex;
+}
+
+ni-tab-control[tab-strip-placement='Top'],
+ni-tab-control[tab-strip-placement='Bottom'] {
+    flex-direction: column;
+}
+
+ni-tab-control .jqx-ribbon {
+    flex-shrink: 0;
+}
+
+ni-tab-control[tab-strip-placement='Top'] > .jqx-ribbon,
+ni-tab-control[tab-strip-placement='Left'] > .jqx-ribbon {
+    order: 0;
+}
+
+ni-tab-control[tab-strip-placement='Bottom'] > .jqx-ribbon,
+ni-tab-control[tab-strip-placement='Right'] > .jqx-ribbon {
+    order: 2;
+}
+
+ni-tab-control .jqx-ribbon-header {
+    display: flex;
+    width: 100%;
+    list-style: none;
+}
+
+ni-tab-control .jqx-ribbon-header-vertical {
+    flex-direction: column;
+    width: var(--ni-tab-ribbon-width);
+    height: 100%;
+}
+
+ni-tab-control .jqx-ribbon-item {
+    display: flex;
+    align-items: center;
+    margin: 0 !important;
+    height: var(--ni-tab-ribbon-height);
+    z-index: 999;
+    cursor: pointer;
+}
+
+ni-tab-control .jqx-ribbon-scrollbutton {
+    display: none !important;
+}
+
+ni-tab-item {
+    display: none;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+ni-tab-item.ni-selected {
+    display: block;
+    overflow: hidden;
+}
+
+ni-tab-item ni-layout-panel {
+    position: relative;
+    display: block;
+    top: 0 !important;
+    left: 0 !important;
+    width: auto !important;
+    height: auto !important;
+}
+
+/**
+Explanation for the following rulesets:
+
+Child selectors (as opposed to descendant selectors) are necessary because we 
+want to allow for nested containers with different layout systems. Consider this 
+example, where a flexible panel contains a tab control with an absolute layout
+tab item, and another tab control within that tab item:
+
+<ni-front-panel layout="flexible">
+    <ni-flexible-layout-group><ni-flexible-layout-wrapper><ni-flexible-layout-container><ni-flexible-layout-component>
+        <ni-tab-control><ni-tab-item layout="absolute"><ni-layout-panel>
+            <ni-tab-control><ni-tab-item layout="absolute"><ni-layout-panel>
+            ...
+        ...
+    ...
+...
+
+Here, we want to select the outer tab control, but not the inner one. So we only
+select immediate ni-tab-control children of flexible components.
+
+We also want to select the outer tab control when it's being dragged, when the 
+HTML will look like this:
+
+<ni-front-panel layout="flexible">
+    <ni-tab-control><ni-tab-item layout="absolute"><ni-layout-panel>
+        <ni-tab-control><ni-tab-item layout="absolute"><ni-layout-panel>
+        ...
+    ...
+...
+
+So we add a second selctor in some cases to select immediate ni-tab-control children of 
+flexible panels (controls are not reparented into flexible containers while dragging).
+*/
+ni-flexible-layout-component > ni-tab-control,
+ni-front-panel[layout="flexible"] > ni-tab-control {
+    height: auto !important;
+    min-height: var(--ni-min-height);
+}
+
+ni-flexible-layout-component > ni-tab-control > ni-tab-item.ni-selected {
+    overflow-x: auto;
+}
+
+ni-flexible-layout-component > ni-tab-control > ni-tab-item > ni-layout-panel,
+ni-front-panel[layout="flexible"] > ni-tab-control > ni-tab-item > ni-layout-panel {
+    padding: 0.5em;
+    min-height: var(--ni-min-height);
+}
+
+ni-tab-item[layout="absolute"] > ni-layout-panel > [ni-control-id] {
+    position: absolute;
+}
+
+/*************************************
+* URL image
+**************************************/
+
+ni-url-image .ni-image-box {
+    background-image: none;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-origin: padding-box;
+    background-clip: border-box;
+    background-attachment: scroll;
+    background-color: transparent;
+    background-size: auto auto;
+}
+
+ni-url-image .ni-stretch-uniform {
+    background-size: contain;
+}
+
+ni-url-image .ni-stretch-uniformtofill {
+    background-size: cover;
+}
+
+ni-url-image .ni-stretch-fill {
+    background-size: 100% 100%;
+}
+
+/*************************************
+* Scroll bar
+**************************************/
+
+jqx-scroll-bar * {
+    cursor: default;
+}
+
+jqx-scroll-bar,
+ni-array-viewer .jqx-array-scrollbar-container-horizontal {
+    position: relative;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: var(--ni-scroll-bar-size);
+}
+
+jqx-scroll-bar[orientation='vertical'] {
+    width: var(--ni-scroll-bar-size);
+    height: 100%;
+    top: 0;
+    left: auto;
+    right: 0;
+}
+
+ni-array-viewer .jqx-array-scrollbar-container-vertical {
+    width: var(--ni-scroll-bar-size);
+    height: 100%;
+    top: 0;
+    left: auto;
+    right: 2px;
+    position: absolute;	
+}
+
+ni-array-viewer div.jqx-array-scrollbar-container-horizontal {
+    margin: 2px 0px;
+}
+
+.vscroll jqx-scroll-bar[orientation='vertical'] {
+    display: block;
+}
+
+.hscroll jqx-scroll-bar:not([orientation='vertical']) {
+    display: block;
+}
+
+.vscroll.hscroll jqx-scroll-bar[orientation='vertical'] {
+    height: calc(100% - var(--ni-scroll-bar-size) - 0.125rem);
+}
+
+.vscroll.hscroll jqx-scroll-bar:not([orientation='vertical']) {
+    width: calc(100% - var(--ni-scroll-bar-size) - 0.125rem);
+}
+
+jqx-scroll-bar[orientation='vertical'] > .jqx-container {
+    flex-direction: column;
+}
+
+jqx-scroll-bar div.jqx-scroll-button,
+ni-array-viewer .jqx-scrollbar-button-state-normal > div {
+    flex-shrink: 0;
+    width: var(--ni-scroll-inner-size) !important;
+    height: var(--ni-scroll-inner-size) !important;
+}
+
+jqx-scroll-bar div.jqx-scroll-button {
+    display: flex;
+}
+
+jqx-scroll-bar .jqx-track {
+    display: flex;
+    position: relative;
+    align-items: center;
+    width: 100%;
+} 
+
+jqx-scroll-bar[orientation='vertical'] .jqx-track {
+    flex-direction: column;
+    height: 100%;
+} 
+
+jqx-scroll-bar .jqx-thumb {
+    position: absolute;
+    height: var(--ni-scroll-thumb-size);
+} 
+
+jqx-scroll-bar[orientation='vertical'] .jqx-thumb {
+    width: var(--ni-scroll-thumb-size);
+    max-height: 100%;
+}
+
+/* Styles for arrows in Data Grid and Graph Tools */
+
+.jqx-arrow-up-legacy::after,
+.jqx-icon-arrow-up-legacy::after {
+    content: none !important;
+}
+
+.jqx-arrow-down-legacy::after,
+.jqx-icon-arrow-down-legacy::after {
+    content: none !important;
+}
+
+.jqx-arrow-left-legacy::after,
+.jqx-icon-arrow-left-legacy::after {
+    content: none !important;
+}
+
+.jqx-arrow-right-legacy::after,
+.jqx-icon-arrow-right-legacy::after {
+    content: none !important;
+}
+
+/*
+    jqxgauge specific CSS variables
+*/
+
+:root {
+    --jqx-font-size: 14px; /* Default font-size */
+    --jqx-font-family: Arial, sans-serif; /* Default font-family */
+    --jqx-tick-color: black; /* Default tick color for jqxTank, jqxSlider and jqxGauge */
+    --jqx-tick-label-color: black; /* Default tick label color for jqxTank, jqxSlider and jqxGauge */
+    --jqx-gauge-default-width: 300px; /* jqxGauge default width */
+    --jqx-gauge-default-height: 300px; /* jqxgauge default height */
+}
+
+jqx-gauge {
+    font-size: var(--jqx-font-size);
+    font-family: var(--jqx-font-family);
+    overflow: hidden;
+    box-sizing: border-box;
+    /* Apple iOS specific browser CSS variable used for area highlighting on click. Reference link for details:
+        https://developer.apple.com/library/content/documentation/AppleApplications/Reference/SafariWebContent/AdjustingtheTextSize/AdjustingtheTextSize.html#//apple_ref/doc/uid/TP40006510-SW5 */
+    -webkit-tap-highlight-color: transparent;
+}
+
+jqx-gauge[disabled] {
+    opacity: 0.55;
+    cursor: default;
+}
+
+/* jqx-gauge */
+jqx-gauge {
+    display: block;
+    width: var(--jqx-gauge-default-width);
+    height: var(--jqx-gauge-default-height);
+    min-width: 125px;
+    min-height: 125px;
+}
+
+jqx-gauge[size-mode="auto"] {
+    min-height: initial;
+}
+
+jqx-gauge:focus {
+    outline: none;
+}
+
+jqx-gauge[dragged],
+jqx-gauge[dragged] .jqx-label {
+    cursor: pointer;
+}
+
+jqx-gauge .jqx-container,
+jqx-gauge .jqx-resize-trigger-container {
+    position: relative;
+}
+
+jqx-gauge > .jqx-container {
+    border-radius: 50%;
+}
+
+jqx-gauge .jqx-svg-container {
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+}
+
+jqx-gauge .jqx-tick {
+    stroke: var(--jqx-tick-color);
+    stroke-width: 1px;
+    width: 15px;
+    pointer-events: none;
+}
+
+jqx-gauge[analog-display-type="fill"][ticks-position="track"] .jqx-tick,
+jqx-gauge[analog-display-type="line"][ticks-position="track"] .jqx-tick {
+    stroke: #F2F2F2;
+}
+
+jqx-gauge .jqx-tick-minor {
+    width: 5px;
+}
+
+jqx-gauge[ticks-visibility="major"] .jqx-tick-minor,
+jqx-gauge[labels-visibility="endPoints"] .jqx-label-middle {
+    visibility: hidden;
+}
+
+jqx-gauge .jqx-label {
+    fill: var(--jqx-tick-label-color);
+}
+
+jqx-gauge .jqx-needle {
+    width: 10px;
+    height: 110px;
+    fill: #a8abae;
+}
+
+jqx-gauge .jqx-needle-central-circle {
+    fill: #a8abae;
+}
+
+jqx-gauge .jqx-track {
+    width: 15px;
+    stroke: #d9dee1;
+    stroke-width: 2px;
+    fill: #d9dee1;
+}
+
+jqx-gauge[show-ranges][ranges] .jqx-track {
+    opacity: 0;
+}
+
+jqx-gauge .jqx-value {
+    stroke: #d9dee1;
+    stroke-width: 2px;
+    fill: #4386B9;
+}
+
+jqx-gauge .jqx-line {
+    stroke: #4386B9;
+    stroke-width: 5px;
+}
+
+.jqx-range {
+    width: 75px;
+    fill: #D8D8D8;
+}
+
+jqx-gauge .jqx-digital-display-container {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: none;
+}
+
+jqx-gauge .jqx-digital-display {
+    position: absolute;
+    display: none;
+    width: 80px;
+    height: auto;
+    top: 75%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: black;
+    font-size: inherit;
+    pointer-events: initial;
+}
+
+jqx-gauge[digital-display] .jqx-digital-display {
+    display: inline-block;
+}
+
+jqx-gauge[digital-display-position="top"] .jqx-digital-display {
+    top: 25%;
+    transform: translate(-50%, -50%);
+}
+
+jqx-gauge[digital-display-position="right"] .jqx-digital-display {
+    top: 50%;
+    left: 70%;
+    transform: translate(-50%, -50%);
+}
+
+jqx-gauge[digital-display-position="left"] .jqx-digital-display {
+    top: 50%;
+    left: 30%;
+    transform: translate(-50%, -50%);
+}
+
+jqx-gauge[digital-display-position="center"] .jqx-digital-display {
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+jqx-gauge .jqx-digital-display input {
+    border: 2px solid #1A1A1A;
+    background-color: #F2F2F2;
+    text-align: center;
+}
+
+jqx-gauge[show-unit] .jqx-digital-display input {
+    border-right: none;
+    text-align: right;
+}
+
+jqx-gauge[show-unit] .jqx-digital-display .jqx-numeric-text-box-unit-display {
+    border: 2px solid #1A1A1A;
+    border-left: none;
+}
+
+/* Draw plug-in */
+.drawContainer {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/*************************************
+* Data Grid
+**************************************/
+
+ni-data-grid-column {
+    display: none;
+}
+
+ni-data-grid .jqx-grid-column-header.ni-selected-header {
+    background-color: #a8afb7;
+}
+
+ni-data-grid .ni-grid-widget .jqx-grid-cell.ni-selected-cell {
+    border-right: 1px solid #00adef;
+}
+
+ni-data-grid .ni-status-bar {
+    background-color: #e8e8e8;
+}
+
+ni-data-grid .ni-aggregate-box {
+    margin: 4px;
+    margin-top: 2px;
+    margin-bottom: 4px;
+    line-height: 1.75;
+}
+
+ni-data-grid > .jqx-grid {
+    position: relative;
+}
+
+ni-data-grid div.jqx-grid-column-header {
+    box-sizing: content-box !important;
+    margin-left: -1px;
+}
+
+ni-data-grid .ni-add-rows-toolbar {
+    bottom: 0px;
+    width: 100%;
+    height: 40px;
+    margin-top: 2px;
+    margin-bottom: -1px;
+    border-top: 1px solid #b8b8b8;
+    z-index: 999;
+    background-color: #e8e8e8;
+    overflow: hidden;
+    position: absolute;
+}
+
+ni-data-grid .ni-add-rows-toolbar .ni-row-count-text-field-box {
+    border: 1px solid #A9A9A9;
+    font: inherit;
+    margin-right: 5px;
+    display: inline-table;
+}
+
+ni-data-grid .ni-add-rows-toolbar .ni-row-count-text-field-box > input {
+    margin: 2px;
+}
+
+ni-data-grid .ni-add-rows-toolbar .ni-add-rows-button {
+    border: 1px solid #A9A9A9;
+    margin-top: 3px;
+    margin-left: 3px;
+}
+
+ni-data-grid .jqx-grid-group-cell {
+    background-color: #ffffff;
+}
+
+ni-data-grid .jqx-grid-cell {
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+
+ni-data-grid .jqx-grid-cell-alt {
+    background-color: var(--ni-grid-cell-alt-background-color);
+}
+
+ni-data-grid .jqx-grid-cell-pinned-alt {
+    background-color: var(--ni-grid-cell-alt-background-color);
+}
+
+ni-data-grid .ni-grid-widget {
+    font: inherit;
+}
+
+ni-data-grid .ni-grid-widget-content,
+ni-data-grid .jqx-widget-content-legacy {
+    font: inherit;
+}
+
+ni-data-grid[column-header-visible] div.jqx-grid-header-legacy {
+    /* Sometimes jqxGrid incorrectly computes visibility: hidden even when header is enabled */
+    visibility: visible !important;
+}
+
+ni-data-grid .ni-widget-container-centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+ni-data-grid > div.jqx-grid > div > div > div.jqx-scrollbar {
+    /*
+    Disables a JQX fadeout animation for the scrollbars on mobile.
+    Scrollbars still hide if they're not needed, because the JQX control
+    uses visibility=hidden not display=none for that.
+    */
+    display: block !important;
+    opacity: 1 !important;
+}
+
+/* Customizations to our controls, when they are in a data grid */
+
+ni-data-grid ni-string-control textarea {
+    overflow: hidden;
+}
+
+ni-data-grid jqx-led {
+    padding: 2px 3px 2px 2px;
+}
+
+/* Adds a margin between the go to page text box and the counters */
+ni-data-grid .jqx-grid-pager > div :nth-child(3) {
+    margin-left: 5px;
+}
+
+/* Hides the the grid pager list drop down*/
+ni-data-grid .jqx-grid-pager > div :nth-child(4) {
+    display: none;
+}
+
+/* Hides the "Show rows:" text*/
+ni-data-grid .jqx-grid-pager > div :nth-child(5) {
+    display: none;
+}
+
+/*
+    Cloned controls can pick up an incorrect width/ height from the template control
+    when we apply the full style attribute of the template to clones on style property
+    changes. This keeps the clones with their expected sizes / positions.
+*/
+ni-data-grid [ni-template-id]:not(jqx-led) {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+ni-data-grid jqx-check-box[ni-template-id] {
+    left: auto !important;
+    top: auto !important;
+    /* Using width=height=auto because the checkbox gets a smaller size
+       based on the --ni-checkbox-radio-size variable */
+    width: auto !important;
+    height: auto !important;
+}
+
+ni-data-grid jqx-led[ni-template-id] {
+    left: auto !important;
+    top: auto !important;
+    width: calc(100% - 2px) !important;
+    height: calc(100% - 2px) !important;
+}
+
+/*************************************
+* Path Control
+**************************************/
+
+ni-path-selector > .ni-path-box {
+    display: flex;
+}
+
+/*************************************
+* Dialogs
+**************************************/
+ni-dialog {
+    font-family: var(--ni-content-font-family);
+    font-size: var(--ni-content-font-size);
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+ni-dialog * {
+    box-sizing: border-box;
+}
+
+ni-dialog .ni-unused-jqx-container {
+    display: none;
+}
+
+ni-dialog[dialog-type="one-button"] .ni-button-two,
+ni-dialog[dialog-type="one-button"] .ni-button-three {
+    display: none;
+}
+
+ni-dialog[dialog-type="two-button"] .ni-button-three {
+    display: none;
+}
+
+ni-dialog[dialog-type="one-button"][text-one=""] .ni-button-one::after {
+    content: "OK";
+}
+
+ni-dialog[dialog-type="two-button"][text-one=""] .ni-button-one::after {
+    content: "OK";
+}
+
+ni-dialog[dialog-type="two-button"][text-two=""] .ni-button-two::after {
+    content: "Cancel";
+}
+
+ni-dialog[dialog-type="three-button"][text-one=""] .ni-button-one::after {
+    content: "Yes";
+}
+
+ni-dialog[dialog-type="three-button"][text-two=""] .ni-button-two::after {
+    content: "No";
+}
+
+ni-dialog[dialog-type="three-button"][text-three=""] .ni-button-three::after {
+    content: "Cancel";
+}
+
+ni-dialog .ni-container {
+    display: flex;
+    flex-direction: column;
+}
+
+ni-dialog dialog {
+    padding: 0px;
+    border-color: var(--ni-gray-cool-36);
+    border-width: 4px;
+    max-width: 384px;
+    /* Make the dialog itself content-box to work around an issue in Safari.
+       I haven't fully root caused but I bet the Safari reason is the same as this old Chrome issue:
+       https://github.com/GoogleChrome/dialog-polyfill/issues/108
+    */
+    box-sizing: content-box;
+}
+
+ni-dialog header {
+    display: flex;
+    background-color: var(--ni-gray-cool-36);
+    width: 100%;
+    flex-shrink: 0;
+    min-height: 26px;
+}
+
+ni-dialog main {
+    flex-grow: 1;
+    white-space:pre-wrap;
+    padding: 1em;
+    background-color: #eef0ef;
+    min-height: 50px;
+    max-height: 200px;
+    min-width: 260px;
+    
+    overflow: auto;
+    -moz-user-select: text;
+    -webkit-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+ni-dialog footer {
+    display: flex;
+    justify-content: center;
+    background-color: #eef0ef;
+    flex-shrink: 0;
+    padding: 0px 3px 0px 3px;
+}
+
+ni-dialog footer button {
+    min-width: 72px;
+    min-height: 23px;
+    border: var(--ni-border);
+    background: var(--ni-false-background);
+    color: var(--ni-false-foreground-color);
+    margin: 6px 3px 6px 3px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+ni-dialog footer button:hover {
+    border-color: var(--ni-hover-border-color);
+}
+
+ni-dialog footer button:active {
+    border-color: var(--ni-active-border-color);
+}
+
+ni-dialog .ni-button-one {
+    border-width: 2px;
+}
+
+ni-dialog .ni-window-title {
+    flex-grow: 1
+}
+
+ni-dialog .ni-close {
+    border: 0px;
+    background-color: var(--ni-gray-cool-36);
+    padding: 0 1em 0 1em;
+    color: white;
+}
+
+ni-dialog .ni-close::after {
+    font-family: "NILVjsFontAwesome";
+    content: "\F00D";
+}
+
+ni-dialog .ni-close:hover {
+    background-color: #767b80;
+}
+
+ni-dialog[prevent-close] .ni-close {
+    display: none;
+}

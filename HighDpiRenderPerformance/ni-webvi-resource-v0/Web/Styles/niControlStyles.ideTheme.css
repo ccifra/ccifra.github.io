@@ -1,0 +1,1115 @@
+/***************************************
+* NI Control Styles
+* IDE Theme CSS. Also maps CSS variables
+* as emitted by the editor to the
+* corresponding parts of a control.
+****************************************/
+
+:root {
+    /* colors */
+    --ni-true-white: #fff;
+    --ni-true-black: #000;
+    --ni-black: #2B3033;
+
+    --ni-highlight: #4386b9;
+    --ni-highlight-text: #99c9ef;
+
+    --ni-gray-flat-f2: #f2f2f2;
+    --ni-gray-flat-f8: #f8f8f8;
+    --ni-gray-neutral-68: #a8abae;
+    --ni-gray-cool-36: #4d5359;
+    --ni-gray-cool-88: #d9dee1;
+    --ni-gray-cool-91: #e9ebec;
+
+    --ni-gray-cool-88-to-91: linear-gradient(var(--ni-gray-cool-91), var(--ni-gray-cool-88) 41%);
+
+    /* content */
+    --ni-content-font-family: 'Segoe UI', 'Helvetica', sans-serif;
+    --ni-content-font-size: calc(var(--ni-panel-grid-size) * 0.75);
+    --ni-foreground-color: var(--ni-black);
+
+    --ni-check-mark-color: var(--ni-true-white);
+
+    /* overflow */
+    --ni-overflow-x: auto;
+    --ni-overflow-y: auto;
+
+    /* border */
+    --ni-border-stroke: 1px;
+    --ni-border-style: solid;
+    --ni-border-color: var(--ni-gray-neutral-68);
+    --ni-border: var(--ni-border-stroke) var(--ni-border-style) var(--ni-border-color);
+
+    /* background */
+    --ni-control-background-color: var(--ni-true-white);
+    --ni-control-background-gradient: var(--ni-gray-cool-88-to-91);
+
+    --ni-indicator-background-color: var(--ni-gray-cool-91);
+
+    --ni-fill-background: var(--ni-highlight);
+
+    --ni-grid-cell-alt-background-color: var(--ni-gray-flat-f8);
+
+    /* size */
+    --ni-min-height: 0px;
+
+    /* interaction states */
+    --ni-hover-border-color: var(--ni-highlight);
+    --ni-hover-background: var(--ni-control-background-color);
+
+    --ni-active-border-color: var(--ni-gray-cool-36);
+    --ni-active-background: var(--ni-highlight);
+    --ni-active-foreground-color: var(--ni-true-white);
+
+    --ni-unselected-background: var(--ni-control-background-color);
+    --ni-selected-background: var(--ni-highlight);
+    --ni-selected-foreground-color: var(--ni-true-white);
+
+    /* value states */
+    --ni-false-background: var(--ni-control-background-gradient);
+    --ni-false-foreground-color: var(--ni-foreground-color);
+    
+    --ni-true-background: var(--ni-highlight);
+    --ni-true-foreground-color: var(--ni-true-white);
+
+    /* theme */
+    --ni-checkbox-radio-size: 0.75rem;
+    --ni-radio-inner-size: 0.25rem;
+    --ni-inner-button-width: 1.5rem;
+    --ni-spin-button-width: 1rem;
+    --ni-list-item-height: calc((1em / 0.75) + 0.5rem);
+    --ni-calendar-elements-size: calc((1em / 0.75) + 0.5rem);
+    --ni-switch-thumb-size: calc(100% - 1.5rem);
+    --ni-slider-thumb-size: 1rem;
+    --radial-progress-track-size: 0.5rem;
+    --ni-array-uninitialized-cell-opacity: 0.5;
+    --ni-disabled-state-opacity: 0.65;
+
+    --ni-tick-stroke: 1px;
+    --ni-major-tick-length: 0.75rem;
+    --ni-minor-tick-length: calc(var(--ni-major-tick-length) / 2);
+
+    --ni-tab-ribbon-height: 1.5rem;
+    --ni-tab-ribbon-width: 4.5rem;
+
+    --ni-scroll-bar-size: 0.75rem;
+    --ni-scroll-inner-size: 0.75rem;
+    --ni-scroll-thumb-size: calc(var(--ni-scroll-inner-size) / 2);
+}
+
+/*************************************
+* User agent
+**************************************/
+
+[ni-control-id] :focus,
+.jqx-widget :focus,
+.jqx-drop-down :focus {
+    outline: 0;
+}
+
+[ni-control-id] ::selection,
+.jqx-widget ::selection,
+.jqx-drop-down ::selection {
+    /* Note: We're not using a CSS variable in the following selector due to a MS Edge bug */
+    /* background: var(--ni-highlight-text) !important; */
+    background: #99c9ef !important;
+}
+
+/*************************************
+* Disabled State
+**************************************/
+[ni-control-id][disabled] {
+    opacity: var(--ni-disabled-state-opacity);
+}
+
+/*
+    Controls inside other controls already are dimmed by the above rule.
+    Want to avoid overdimming nested controls.
+    Also note that arrays are excluded because otherwise this rule would get
+    rid of the dimming effect on uninitialized array cells.
+*/
+[ni-control-id][disabled]:not(ni-array-viewer) [ni-control-id][disabled] {
+    opacity: 1;
+}
+
+/*************************************
+* Shared
+**************************************/
+
+.jqx-drop-down,
+.jqx-date-time-drop-down {
+    top: 100%;
+}
+
+/*************************************
+* Controls
+**************************************/
+
+[ni-control-id] {
+    font-family: var(--ni-content-font-family);
+    font-size: var(--ni-content-font-size);
+    color: var(--ni-foreground-color);
+}
+
+/*************************************
+* Labels
+**************************************/
+
+ni-label > label {
+    color: var(--ni-foreground-color);
+}
+
+/*************************************
+* Buttons
+**************************************/
+
+jqx-toggle-button > .jqx-container,
+jqx-power-button > .jqx-container,
+jqx-led > .jqx-container,
+jqx-check-box .jqx-input {
+    border: var(--ni-border);
+    background: var(--ni-false-background);
+    color: var(--ni-false-foreground-color);
+}
+
+jqx-toggle-button:not([readonly]):not(.ni-edit-time-indicator):not([disabled]) > .jqx-container:hover,
+jqx-power-button:not([readonly]):not(.ni-edit-time-indicator):not([disabled]) > .jqx-container:hover,
+jqx-led:not([readonly]):not(.ni-edit-time-indicator):not([disabled]) > .jqx-container:hover,
+jqx-check-box:not([readonly]):not(.ni-edit-time-indicator):not([disabled]) > .jqx-container:hover .jqx-input,
+jqx-radio-button:not([readonly]):not(.ni-edit-time-indicator):not([disabled]) > .jqx-container:hover .jqx-input {
+    border-color: var(--ni-hover-border-color);
+}
+
+jqx-toggle-button:not([readonly]):not(.ni-edit-time-indicator):not([disabled]) > .jqx-container:active,
+jqx-power-button:not([readonly]):not(.ni-edit-time-indicator):not([disabled]) > .jqx-container:active,
+jqx-led:not([readonly]):not(.ni-edit-time-indicator):not([disabled]) > .jqx-container:active,
+jqx-check-box:not([readonly]):not(.ni-edit-time-indicator):not([disabled]) > .jqx-container:active .jqx-input,
+jqx-radio-button:not([readonly]):not(.ni-edit-time-indicator):not([disabled]) > .jqx-container:active .jqx-input,
+.jqx-checkbox .jqx-checkbox-default:active {
+    border-color: var(--ni-active-border-color);
+}
+
+jqx-toggle-button[checked] > .jqx-container,
+jqx-power-button[checked] > .jqx-container,
+jqx-led[checked] > .jqx-container,
+jqx-check-box[checked] .jqx-input {
+    background: var(--ni-true-background);
+    color: var(--ni-true-foreground-color);
+}
+
+jqx-check-box .jqx-label,
+jqx-radio-button .jqx-label {
+    padding-left: 0.25rem;
+}
+
+/*************************************
+* Toggle button
+**************************************/
+
+jqx-toggle-button {
+}
+
+jqx-toggle-button > .jqx-container {
+    border-color: var(--ni-border-color);
+    border-image: var(--ni-border-gradient);
+    border-image-slice: 1;
+} 
+
+jqx-toggle-button > .jqx-container {
+    padding: 0.25rem;
+}
+
+jqx-toggle-button .ni-glyph {
+    padding-right: 0.25rem;
+}
+
+/*************************************
+* Power button
+**************************************/
+
+jqx-power-button > .jqx-container {
+    border-radius: 50%;
+}
+
+jqx-power-button:not([readonly]):not(.ni-edit-time-indicator):not([disabled]) > .jqx-container:hover {
+    background: var(--ni-hover-background);
+}
+
+jqx-power-button:not([readonly]):not(.ni-edit-time-indicator):not([disabled]) > .jqx-container:active {
+    background: var(--ni-active-background);
+    color: var(--ni-active-foreground-color);
+}
+
+jqx-power-button[checked]:not([readonly]):not(.ni-edit-time-indicator):not([disabled]) > .jqx-container:hover {
+    background: var(--ni-true-background);
+    color: var(--ni-true-foreground-color);
+}
+
+/*************************************
+* LED
+**************************************/
+
+jqx-led {
+    --ni-false-background: var(--ni-control-background-color);
+}
+
+/*************************************
+* Check box
+**************************************/
+
+jqx-check-box {
+    --ni-false-background: var(--ni-control-background-color);
+}
+
+jqx-check-box .jqx-label {
+    color: var(--ni-foreground-color);
+}
+
+jqx-check-box[checked] .jqx-input {
+    color: var(--ni-check-mark-color);
+}
+
+/*************************************
+* Radio button
+**************************************/
+
+jqx-radio-button .jqx-input,
+jqx-radio-button[checked] .jqx-input::after {
+    border-radius: 50%;
+}
+
+jqx-radio-button .jqx-input {
+    border: var(--ni-border);
+    background: var(--ni-unselected-background);
+}
+
+jqx-radio-button[checked] .jqx-input {
+    background: var(--ni-selected-background);
+}
+
+jqx-radio-button[checked] .jqx-input::after {
+    background: var(--ni-selected-foreground-color);
+}
+
+/*************************************
+* Inner Buttons
+**************************************/
+
+jqx-numeric-text-box .jqx-numeric-text-box-radix-display,
+jqx-date-time-picker .jqx-calendar-button,
+jqx-calendar .jqx-footer-component-today {
+    border: var(--ni-border);
+    background: var(--ni-control-background-gradient);
+}
+
+jqx-numeric-text-box:not([readonly]):not([disabled]) .jqx-numeric-text-box-radix-display:hover,
+jqx-date-time-picker:not([readonly]):not([disabled]) .jqx-calendar-button:hover,
+jqx-calendar .jqx-footer-component-today:hover {
+    border-color: var(--ni-hover-border-color);
+    background: var(--ni-hover-background);
+}
+
+jqx-numeric-text-box:not([readonly]):not([disabled]) .jqx-numeric-text-box-radix-display:active,
+jqx-date-time-picker:not([readonly]):not([disabled]) .jqx-calendar-button:active,
+jqx-calendar .jqx-footer-component-today:active {
+    border-color: var(--ni-active-border-color);
+    background: var(--ni-active-background);
+    color: var(--ni-active-foreground-color);
+}
+
+/*************************************
+* Spin buttons
+**************************************/
+
+jqx-numeric-text-box jqx-repeat-button > .jqx-container,
+jqx-calendar .jqx-footer-component-hour jqx-repeat-button > .jqx-container,
+jqx-calendar .jqx-footer-component-minute jqx-repeat-button > .jqx-container,
+ni-array-viewer .jqx-array-indexer .jqx-action-button {
+    border: var(--ni-border) !important;
+    background: var(--ni-control-background-gradient);
+}
+
+jqx-numeric-text-box:not([readonly]):not(.ni-edit-time-indicator):not([disabled]) jqx-repeat-button > .jqx-container:hover,
+jqx-calendar .jqx-footer-component-hour jqx-repeat-button > .jqx-container:hover,
+jqx-calendar .jqx-footer-component-minute jqx-repeat-button > .jqx-container:hover,
+ni-array-viewer:not([readonly]):not(.ni-edit-time-indicator):not([disabled]) .jqx-array-indexer .jqx-action-button:hover {
+    border-color: var(--ni-hover-border-color) !important;
+    background: var(--ni-hover-background);
+}
+
+jqx-numeric-text-box:not([readonly]):not(.ni-edit-time-indicator):not([disabled]) jqx-repeat-button > .jqx-container:active,
+jqx-calendar .jqx-footer-component > span jqx-repeat-button > .jqx-container:active,
+ni-array-viewer:not([readonly]):not(.ni-edit-time-indicator):not([disabled]) .jqx-array-indexer .jqx-action-button:active {
+    border-color: var(--ni-active-border-color) !important;
+    background: var(--ni-active-background);
+    color: var(--ni-active-foreground-color);
+}
+
+jqx-numeric-text-box .jqx-spin-buttons-container,
+jqx-calendar .jqx-footer-component-hour jqx-repeat-button,
+jqx-calendar .jqx-footer-component-minute jqx-repeat-button,
+ni-array-viewer .jqx-array-indexer > div {
+    margin-left: 0.125rem;
+}
+
+jqx-numeric-text-box[spin-buttons-position='left'] .jqx-spin-buttons-container {
+    margin-left: 0;
+    margin-right: 0.125rem;
+}
+
+jqx-numeric-text-box jqx-repeat-button:first-child,
+jqx-calendar .jqx-footer-component-hour jqx-repeat-button:first-child,
+jqx-calendar .jqx-footer-component-minute jqx-repeat-button:first-child,
+ni-array-viewer .jqx-array-indexer .jqx-action-button:first-child {
+    margin-bottom: 0.125rem;
+}
+
+/*************************************
+* Lists & items
+**************************************/
+
+jqx-list-box > .jqx-container,
+jqx-numeric-text-box .jqx-drop-down {
+    border: var(--ni-border);
+    background: var(--ni-control-background-color);
+}
+
+jqx-list-item > .jqx-container,
+jqx-numeric-text-box .jqx-list-item {
+    border: var(--ni-border);
+    border-color: transparent;
+}
+
+jqx-list-box:not([readonly]):not(.ni-edit-time-indicator):not([disabled]) jqx-list-item:not([selected]) > .jqx-container:hover,
+jqx-numeric-text-box .jqx-list-item:hover {
+    border-color: var(--ni-hover-border-color);
+    background: var(--ni-hover-background);
+}
+
+jqx-list-box:not([readonly]):not(.ni-edit-time-indicator):not([disabled]) jqx-list-item > .jqx-container:active,
+jqx-numeric-text-box .jqx-list-item:active {
+    border-color: var(--ni-active-border-color);
+}
+
+jqx-list-box jqx-list-item[selected] .jqx-container {
+    background: var(--ni-selected-background);
+    color: var(--ni-selected-foreground-color);
+}
+
+jqx-list-item,
+jqx-numeric-text-box .jqx-list-item {
+    padding: 0.125rem;
+    padding-bottom: 0;
+}
+
+jqx-list-item:last-child,
+jqx-numeric-text-box .jqx-list-item:last-child {
+    padding-bottom: 0.125rem;
+}
+
+/*************************************
+* Radio button list
+**************************************/
+
+ni-radio-button-group[orientation='horizontal'] jqx-radio-button:not(:last-child) > .jqx-container {
+    padding-right: 0.75rem;
+}
+
+/*************************************
+* List box
+**************************************/
+
+jqx-list-box[readonly] > .jqx-container,
+jqx-list-box.ni-edit-time-indicator > .jqx-container {
+    background: var(--ni-indicator-background-color);
+}
+
+jqx-list-item .jqx-list-item-container {
+    padding: 0 0.125rem;
+}
+
+/*************************************
+* Dropdown
+**************************************/
+
+jqx-drop-down-list {
+    --ni-inner-button-width: 1rem;
+}
+
+jqx-drop-down-list > .jqx-container > .jqx-content {
+    border: var(--ni-border);
+    background: var(--ni-control-background-color);
+}
+
+jqx-drop-down-list:not([readonly]):not(.ni-edit-time-indicator):not([disabled]):not([opened]) > .jqx-container > .jqx-content:hover {
+    border-color: var(--ni-hover-border-color);
+    background: var(--ni-hover-background);
+}
+
+jqx-drop-down-list:not([readonly]):not(.ni-edit-time-indicator):not([disabled]) > jqx.container > .jqx-content:active {
+    border-color: var(--ni-active-border-color);
+}
+
+jqx-drop-down-list[readonly] > .jqx.container > .jqx-content,
+jqx-drop-down-list.ni-edit-time-indicator > jqx.container > .jqx-content {
+    background: var(--ni-indicator-background-color);
+}
+
+jqx-drop-down-list .jqx-token {
+    padding: 0 0.25rem;
+}
+
+/*************************************
+* Ring
+**************************************/
+
+ni-ring-selector jqx-numeric-text-box {
+    margin-left: 0.125rem;
+}
+
+/*************************************
+* Hyperlink
+**************************************/
+
+ni-hyperlink {
+    --ni-foreground-color: var(--ni-highlight);
+}
+
+ni-hyperlink > a,
+ni-hyperlink > a:active,
+ni-hyperlink > a:visited {
+    color: var(--ni-foreground-color);
+    text-decoration: none;
+}
+
+ni-hyperlink > a:hover {
+    text-decoration: underline;
+}
+
+/*************************************
+* Text boxes
+**************************************/
+ni-string-control textarea,
+jqx-numeric-text-box input,
+jqx-date-time-picker input,
+ni-array-viewer .jqx-array-indexer input {
+    border: var(--ni-border) !important;
+    background: var(--ni-control-background-color);
+    color: var(--ni-foreground-color);
+}
+
+ni-string-control:not([read-only]):not(.ni-edit-time-indicator):not([disabled]) textarea:hover,
+jqx-numeric-text-box:not([readonly]):not(.ni-edit-time-indicator):not([disabled]) input:hover,
+jqx-date-time-picker:not([readonly]):not(.ni-edit-time-indicator):not([disabled]) input:hover,
+ni-array-viewer .jqx-array-indexer input:hover {
+    border-color: var(--ni-hover-border-color) !important;
+}
+
+ni-string-control[read-only] textarea,
+ni-string-control.ni-edit-time-indicator textarea,
+jqx-numeric-text-box[readonly] input,
+jqx-numeric-text-box.ni-edit-time-indicator input,
+jqx-date-time-picker[readonly] input,
+jqx-date-time-picker.ni-edit-time-indicator input {
+    background: var(--ni-indicator-background-color);
+}
+
+ni-string-control textarea,
+jqx-numeric-text-box input,
+jqx-date-time-picker input,
+ni-array-viewer .jqx-array-indexer input {
+    padding: 0.25rem !important;
+}
+
+/*************************************
+* Numeric
+**************************************/
+
+jqx-numeric-text-box .jqx-numeric-text-box-radix-display {
+    margin-right: 0.125rem;
+}
+
+jqx-numeric-text-box .jqx-list-item {
+    padding: 0.125rem;
+}
+
+/*************************************
+* Time stamp
+**************************************/
+
+jqx-date-time-picker .jqx-calendar-button {
+    margin-left: 0.125rem;
+}
+
+/*************************************
+* Calendar
+**************************************/
+
+jqx-calendar > .jqx-container {
+    border: var(--ni-border);
+    background: var(--ni-control-background-color);
+}
+
+jqx-calendar .jqx-calendar-header jqx-repeat-button > .jqx-container:hover {
+    color: var(--ni-highlight);
+}
+
+jqx-calendar .jqx-calendar-week div::before {
+    border: var(--ni-border);
+    border-color: transparent;
+}
+
+jqx-calendar .jqx-calendar-week div:not(.jqx-other-month-date):not([selected]):hover::before {
+    border-color: var(--ni-hover-border-color);
+    background: var(--ni-hover-background);
+}
+
+jqx-calendar .jqx-calendar-week div:active::before {
+    border-color: var(--ni-active-border-color);
+}
+
+jqx-calendar .jqx-calendar-week div[selected] {
+    background: var(--ni-selected-background);
+    color: var(--ni-selected-foreground-color);
+}
+
+jqx-calendar .jqx-calendar-week div[today] {
+    color: var(--ni-highlight);
+}
+
+jqx-calendar .jqx-calendar-week div[selected][today] {
+    color: var(--ni-selected-foreground-color);
+}
+
+jqx-calendar .jqx-other-month-date {
+    opacity: 0.25;
+}
+
+jqx-calendar .jqx-calendar-container {
+    padding: 0.25rem;
+}
+
+jqx-calendar .jqx-previous-month-button,
+jqx-calendar .jqx-next-month-button {
+    margin: 0.125rem;
+}
+
+jqx-calendar .jqx-calendar-week-titles div,
+jqx-calendar .jqx-calendar-week div {
+    margin: 0.125rem;
+}
+
+jqx-calendar .jqx-footer {
+    margin: 0 0.125rem;
+}
+
+jqx-calendar .jqx-date-time-picker-footer {
+    padding: 0.25rem 0;
+}
+
+jqx-calendar .jqx-footer-component:not(:last-child) {
+    padding-right: 0.5rem;
+}
+
+jqx-calendar .jqx-footer-component-today::after {
+    padding: 0 0.25rem;
+}
+
+/*************************************
+* Switch
+**************************************/
+
+jqx-switch-button .jqx-false-content-container,
+jqx-switch-button .jqx-true-content-container {
+    color: var(--ni-foreground-color);
+}
+
+jqx-switch-button .jqx-thumb::before {
+   border: var(--ni-border);
+   background: var(--ni-control-background-gradient);
+}
+
+jqx-switch-button .jqx-thumb::after {
+    border: var(--ni-border);
+    background: var(--ni-control-background-gradient);
+}
+
+jqx-switch-button:not([readonly]) .jqx-thumb:hover::after {
+   border-color: var(--ni-hover-border-color);
+   background: var(--ni-hover-background);
+}
+
+jqx-switch-button:not([readonly]) .jqx-thumb:active::after,
+jqx-switch-button:not([readonly]) .jqx-thumb:active:hover::after {
+   border-color: var(--ni-active-border-color);
+}
+
+jqx-switch-button[disabled] .jqx-thumb:hover::after {
+    border: var(--ni-border);
+    background: var(--ni-control-background-gradient);   
+}
+
+jqx-switch-button[checked] .jqx-thumb::before {
+    background: var(--ni-selected-background);
+    border-color: var(--ni-highlight);
+}
+
+jqx-switch-button .jqx-false-content-container {
+    padding-right: 0.25rem;
+}
+
+jqx-switch-button .jqx-true-content-container {
+    padding-right: 0;
+    padding-left: 0.25rem;
+}
+
+jqx-switch-button[orientation='vertical'] .jqx-false-content-container {
+    padding-top: 0.25rem;
+}
+
+jqx-switch-button[orientation='vertical'] .jqx-true-content-container {
+    padding-top: 0;
+    padding-bottom: 0.25rem;
+}
+
+jqx-switch-button .jqx-thumb {
+    padding: 1rem 0;
+}
+
+jqx-switch-button[orientation='vertical'] .jqx-thumb {
+    padding: 0 1rem;
+}
+
+/*************************************
+* Scale
+**************************************/
+
+jqx-slider .jqx-tick,
+jqx-tank .jqx-tick {
+    background: var(--ni-foreground-color);
+}
+
+jqx-slider .jqx-scale,
+jqx-tank .jqx-scale {
+    margin-right: 0.125rem;
+}
+
+jqx-slider[orientation='horizontal'] .jqx-scale,
+jqx-tank[orientation='horizontal'] .jqx-scale {
+    margin-right: 0;
+    margin-top: 0.125rem;
+}
+
+jqx-slider .jqx-label,
+jqx-tank .jqx-label {
+    margin-right: 0.125rem;
+}
+
+jqx-slider[orientation='horizontal'] .jqx-label,
+jqx-tank[orientation='horizontal'] .jqx-label {
+    margin-right: 0;
+    margin-top: 0.125rem;
+}
+
+/*************************************
+* Slider & tank
+**************************************/
+
+jqx-slider .jqx-track::before,
+jqx-tank .jqx-track::before {
+    border: var(--ni-border);
+    background: var(--ni-control-background-gradient);
+}
+
+jqx-slider .jqx-value,
+jqx-tank .jqx-value {
+    background: var(--ni-fill-background);
+}
+
+jqx-slider .jqx-container,
+jqx-tank .jqx-container {
+    padding: 0.75rem 0.25rem !important;
+}
+
+jqx-slider[orientation="horizontal"] .jqx-container,
+jqx-tank[orientation="horizontal"] .jqx-container {
+    padding: 0.25rem 0.75rem !important;
+}
+
+jqx-slider .jqx-track,
+jqx-tank .jqx-track {
+    padding: 0 0.25rem;
+}
+
+jqx-slider[orientation="horizontal"] .jqx-track,
+jqx-tank[orientation="horizontal"] .jqx-track {
+    padding: 0.25rem 0;
+}
+
+/*************************************
+* Slider
+**************************************/
+
+jqx-slider .jqx-thumb {
+    border: var(--ni-border);
+    background: var(--ni-control-background-gradient);
+}
+
+jqx-slider .jqx-track-container:hover .jqx-thumb {
+    border-color: var(--ni-hover-border-color);
+    background: var(--ni-hover-background);
+}
+
+jqx-slider[disabled] .jqx-track-container:hover .jqx-thumb {
+    border: var(--ni-border);
+    background: var(--ni-control-background-gradient);   
+}
+
+jqx-slider .jqx-thumb:active,
+jqx-slider .jqx-thumb:active:hover {
+    border-color: var(--ni-active-border-color);
+}
+
+jqx-slider .jqx-tooltip {
+    border: var(--ni-border);
+    background: var(--ni-control-background-color);
+}
+
+jqx-slider .jqx-tooltip {
+    padding: 0 0.25rem;
+}
+
+/*************************************
+* Linear progress
+**************************************/
+
+jqx-progress-bar > .jqx-container::before {
+   border: var(--ni-border);
+   background: var(--ni-control-background-gradient);
+}
+
+jqx-progress-bar .jqx-value {
+    background: var(--ni-fill-background);
+}
+
+/*************************************
+* Radial progress
+**************************************/
+
+jqx-circular-progress-bar > .jqx-container {
+    border: var(--ni-border);
+}
+
+jqx-circular-progress-bar .jqx-value-path {
+    stroke: var(--ni-gray-cool-88);
+}
+
+jqx-circular-progress-bar .jqx-value {
+    stroke: var(--ni-fill-background);
+}
+
+jqx-circular-progress-bar .jqx-label-container {
+    border: var(--ni-border);
+}
+
+/*************************************
+* Graph & chart legends
+**************************************/
+
+ni-scale-legend .ni-scale-legend-box {
+    border: var(--ni-border);
+}
+
+/*************************************
+* Color picker
+**************************************/
+
+.legend-colorbox-colorbox {
+    padding: 0.25rem;
+}
+
+.jqx-color-picker-map-hue {
+    margin-right: 0.25rem;
+}
+
+.jqx-color-picker-panel {
+    padding-top: 0.25rem;
+}
+
+.jqx-color-picker-panel > div:first-child {
+    padding-right: 0.25rem;
+}
+
+.jqx-color-picker-panel > div:nth-child(3) {
+    margin-top: 0.25rem !important;
+}
+
+.jqx-color-picker-panel > div input {
+    margin: 0 !important;
+}
+
+.jqx-color-picker-panel > div span:not(:first-of-type) {
+    margin-left: 0.25rem;
+    margin-right: 0.125rem;
+}
+
+div.jqx-color-picker-panel input {
+    border: var(--ni-border);
+}
+
+/*************************************
+* Array
+**************************************/
+
+ni-array-viewer > :not(.jqx-array) {
+    display: none;
+}
+
+ni-array-viewer .jqx-array-indexer-container,
+ni-array-viewer .jqx-array-big-container {
+    border: var(--ni-border);
+    background: var(--ni-control-background-color);
+}
+
+ni-array-viewer[read-only] .jqx-array-indexer-container,
+ni-array-viewer[read-only] .jqx-array-big-container {
+    background: var(--ni-indicator-background-color);
+}
+
+ni-array-viewer .jqx-array-element.jqx-fill-state-disabled > [ni-control-id]:not(jqx-numeric-text-box):not(jqx-date-time-picker):not(ni-enum-selector):not(ni-ring-selector) {
+    opacity: var(--ni-array-uninitialized-cell-opacity);
+}
+
+ni-array-viewer .jqx-array-element.jqx-fill-state-disabled input.jqx-numeric-text-box-component {
+    opacity: var(--ni-array-uninitialized-cell-opacity);
+}
+
+ni-array-viewer .jqx-array-element.jqx-fill-state-disabled .jqx-numeric-text-box-component.jqx-spin-buttons-container {
+    opacity: var(--ni-array-uninitialized-cell-opacity);
+}
+
+ni-array-viewer .jqx-array-element.jqx-fill-state-disabled .jqx-numeric-text-box-component.jqx-numeric-text-box-radix-display {
+    opacity: var(--ni-array-uninitialized-cell-opacity);
+}
+
+ni-array-viewer .jqx-array-element.jqx-fill-state-disabled .jqx-spin-buttons-container {
+    opacity: var(--ni-array-uninitialized-cell-opacity);
+}
+
+ni-array-viewer .jqx-array-element.jqx-fill-state-disabled input.jqx-date-time-input {
+    opacity: var(--ni-array-uninitialized-cell-opacity);
+}
+
+ni-array-viewer .jqx-array-element.jqx-fill-state-disabled .jqx-calendar-button {
+    opacity: var(--ni-array-uninitialized-cell-opacity);
+}
+
+ni-array-viewer .jqx-array-element.jqx-fill-state-disabled span.jqx-action-button {
+    opacity: var(--ni-array-uninitialized-cell-opacity);
+}
+
+ni-array-viewer .jqx-array-element.jqx-fill-state-disabled span.jqx-drop-down-button {
+    opacity: var(--ni-array-uninitialized-cell-opacity);
+}
+
+ni-array-viewer .jqx-array-indexer-container {
+    margin-right: 0.125rem;
+}
+
+ni-array-viewer .jqx-array-indexer {
+    padding: 0.25rem;
+}
+
+ni-array-viewer .jqx-array-indexer-container {
+    display: none !important;
+}
+
+ni-array-viewer[index-visibility] .jqx-array-indexer-container {
+    display: flex !important;
+    flex-direction: column;
+}
+
+ni-array-viewer .jqx-array-element {
+    box-sizing: content-box !important;
+    padding: 2px;
+}
+
+/*************************************
+* Cluster
+**************************************/
+
+ni-cluster {
+    border: var(--ni-border);
+    background: var(--ni-control-background-color);
+}
+
+/*************************************
+* Data Grid
+**************************************/
+
+ni-data-grid {
+    /* Controls in a data grid don't have the light gray background, even for a data grid indicator. Matches desktop. */
+    --ni-indicator-background-color: var(--ni-control-background-color);
+}
+
+ni-data-grid ni-string-control, ni-data-grid jqx-numeric-text-box, ni-data-grid jqx-drop-down-list {
+    --ni-border: none;
+    --ni-control-background-gradient: var(--ni-control-background-color);
+    --ni-control-background-color: transparent;
+    --ni-indicator-background-color: transparent;
+}
+
+ni-data-grid jqx-progress-bar {
+    --ni-border: none;
+}
+
+ni-data-grid input.ni-pager-text-field {
+    border: var(--ni-border);
+}
+
+/*************************************
+* Tab container
+**************************************/
+
+ni-tab-item {
+    border: var(--ni-border);
+    background: var(--ni-control-background-color);
+}
+
+ni-tab-control .jqx-ribbon-item.jqx-fill-state-disabled {
+    cursor: default;
+    opacity: var(--ni-disabled-state-opacity);
+}
+
+ni-tab-control .jqx-ribbon-item {
+    border: var(--ni-border);
+    background: var(--ni-control-background-gradient);
+}
+
+ni-tab-control .jqx-ribbon-item:not(.jqx-ribbon-item-selected):hover {
+    border-color: var(--ni-hover-border-color);
+    background: var(--ni-hover-background);
+}
+
+ni-tab-control .jqx-ribbon-item:not(.jqx-ribbon-item-selected):active {
+    border-color: var(--ni-active-border-color);
+}
+
+ni-tab-control .jqx-ribbon-item.jqx-ribbon-item-selected {
+    background: var(--ni-control-background-color);
+}
+
+ni-tab-control[tab-strip-placement='Top'] > .jqx-ribbon .jqx-ribbon-item-selected {
+    border-bottom-color: var(--ni-control-background-color);
+}
+
+ni-tab-control[tab-strip-placement='Bottom'] > .jqx-ribbon .jqx-ribbon-item-selected {
+    border-top-color: var(--ni-control-background-color);
+}
+
+ni-tab-control[tab-strip-placement='Left'] > .jqx-ribbon .jqx-ribbon-item-selected {
+    border-right-color: var(--ni-control-background-color);
+}
+
+ni-tab-control[tab-strip-placement='Right'] > .jqx-ribbon .jqx-ribbon-item-selected {
+    border-left-color: var(--ni-control-background-color);
+}
+
+ni-tab-control .jqx-ribbon-item {
+    padding: 0 0.25rem;
+}
+
+ni-tab-control[tab-strip-placement='Top'] ni-tab-item {
+    margin-top: -1px;
+}
+
+ni-tab-control[tab-strip-placement='Bottom'] ni-tab-item {
+    margin-bottom: -1px;
+}
+
+ni-tab-control[tab-strip-placement='Left'] ni-tab-item {
+    margin-left: -1px;
+}
+
+ni-tab-control[tab-strip-placement='Right'] ni-tab-item {
+    margin-right: -1px;
+}
+
+/*************************************
+* Scroll bar
+**************************************/
+
+jqx-scroll-bar div.jqx-scroll-button,
+ni-array-viewer .jqx-scrollbar-button-state-normal > div {
+    border: var(--ni-border);
+    border-color: transparent;
+    background: transparent;
+    color: var(--ni-gray-neutral-68);
+}
+
+jqx-scroll-bar div.jqx-scroll-button:hover,
+ni-array-viewer .jqx-scrollbar-button-state-normal > div:hover {
+    border-color: var(--ni-hover-border-color);
+    background: var(--ni-hover-background);
+    color: var(--ni-highlight);
+}
+
+jqx-scroll-bar div.jqx-scroll-button:active,
+ni-array-viewer .jqx-scrollbar-button-state-normal > div:active {
+    background: var(--ni-active-background);
+    color: var(--ni-active-foreground-color);
+}
+
+jqx-scroll-bar .jqx-thumb,
+ni-array-viewer .jqx-scrollbar-thumb-state-normal::before,
+ni-array-viewer .jqx-scrollbar-thumb-state-normal-horizontal::before {
+    border: var(--ni-border);
+    background: var(--ni-gray-neutral-68);
+} 
+
+jqx-scroll-bar .jqx-thumb:hover,
+ni-array-viewer .jqx-scrollbar-thumb-state-normal:hover::before,
+ni-array-viewer .jqx-scrollbar-thumb-state-normal-horizontal:hover::before {
+    border-color: var(--ni-hover-border-color);
+    background: var(--ni-hover-background);
+} 
+
+jqx-scroll-bar .jqx-thumb:active,
+ni-array-viewer .jqx-scrollbar-thumb-state-normal:active::before,
+ni-array-viewer .jqx-scrollbar-thumb-state-normal-horizontal:active::before {
+    background: var(--ni-active-background);
+} 
+
+jqx-scroll-bar {
+    margin-bottom: 0.125rem;
+}
+
+jqx-scroll-bar[orientation='vertical'] {
+    margin-bottom: 0;
+    margin-right: 0.125rem;
+}
+
+jqx-scroll-bar > .jqx-container,
+ni-array-viewer .jqx-array-scrollbar-container-horizontal {
+    padding: 0 0.125rem;
+}
+
+jqx-scroll-bar[orientation='vertical'] > .jqx-container,
+ni-array-viewer .jqx-array-scrollbar-container-vertical {
+    padding: 0.125rem 0;
+}
+
+jqx-scroll-bar .jqx-track {
+    margin: 0 calc(var(--ni-scroll-inner-size) * 0.25);
+}
+
+jqx-scroll-bar[orientation='vertical'] .jqx-track {
+    margin: calc(var(--ni-scroll-inner-size) * 0.25) 0;
+}
+
+/*************************************
+* URL Image Control
+**************************************/
+ni-url-image[source=""] .ni-image-box {
+    background: var(--ni-gray-cool-91);
+}
