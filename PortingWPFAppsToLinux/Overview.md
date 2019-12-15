@@ -59,7 +59,29 @@ wine {location name of your app}
 Here is a picture of the [Modern WPF](https://github.com/Kinnara/ModernWpf) example application running on Linux
 ![](ModernWPFSampleApp.png)
 
-## Issues I have run into so far
+## What do you do if the app does not work
+
+I have not been able to get a debugger working with .NET Core apps running under Wine so you will have to rely on logging methods to debug issues that you run into.
+
+### Console.Writeline
+
+You can use Console.WriteLine to log any information you may need to debug issues. I highly recommend adding generous amounts of logging, asserts, and verification to your app.  When catching unexpected excetions be sure to log the exception and call stack from the exception so you can easily determine the location of the error.
+
+I reccommend installing general exception handlers you can you catch unhandled exceptions and log them as well.
+
+Dispatcher has an [UnhandledException](https://docs.microsoft.com/en-us/dotnet/api/system.windows.threading.dispatcher.unhandledexception?view=netcore-3.0) event you should register for.
+
+AppDomain also has an [UnhandledException](https://docs.microsoft.com/en-us/dotnet/api/system.appdomain.unhandledexception?view=netcore-3.0) event that you should also register for.
+
+### Wine Tracing
+
+Wine is good at letting you know when your application calls unimplemented or partially implemented functionality.  These messages can greatly aid in tracking down issues.
+
+In addition to the standard tracing of Wine you can configure even more event logging, including logging every call into Wine, to help you track down issues.  You can learn more about debug logging [Here](https://wiki.winehq.org/Wine_Developer%27s_Guide/Debug_Logging)
+
+Also the Wine [Debugging Hints](https://wiki.winehq.org/Debugging_Hints) may provide some insights.
+
+## Issues I ran into
 
 ### Rendering Issues with different Video Cards
 
@@ -79,3 +101,17 @@ export LIBGL_ALWAYS_SOFTWARE=1
 ## Will WPF apps run on other OSes
 
 WPF runs on DirectX 9 so any build of Wine with a reasonable DirectX support.
+
+## Whats Next
+
+When you run a WPF application on Linux as documented here you end up with an application that is something like this:
+
+![](StockWineNetApp.png)
+
+It would be great to be able to switch to .NET Core for Linux, keep using WPF, and have WPF Apps continue to work for the most part.  Then the appliations would have a boxology like this
+
+![](WineLibBoxology.png)
+
+To do this WPF needs to be updated to compile against [WineLib](https://wiki.winehq.org/Winelib_User%27s_Guide). In theory this should not be too difficult, but I have not tried this at all yet.
+
+Switching to the Linux version of .NET Core would enable debugging and calling into native libraries without having to create a Wine wrapper DLL.
