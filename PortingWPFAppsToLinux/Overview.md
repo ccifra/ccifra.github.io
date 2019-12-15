@@ -1,27 +1,27 @@
-# A Guide To Running WPF Apps on Linux With .NET Core and Wine
+# A Developers Guide To Running WPF Apps On Linux With .NET Core and Wine
 
 ## Overview
 
 With the release of .NET Core 3.0 and it's support for WPF it is now possible to run a WPF app Linux by running the application under Wine.
 
-For those who have not heard of Wine before, it is a compatibiliy layer which allows you to run Windows applications of Linux, and other OSes.
-For more information you can read up on Wine at their website: [WineHQ](https://www.winehq.org/)
+For those who have not heard of Wine before, it is a compatibiliy layer which allows you to run Windows applications on Linux and other OSes.
+For more information you can read about Wine at their website: [WineHQ](https://www.winehq.org/)
 
-Wine, in my experience, is mostly used to enable users to run games on Linux, which is great for the WPF use case since WPF uses DirectX for rendering.
+Wine is used a lot to enable users to run games on Linux with requires Wine. To support this Wine high quality implementation of DirectX.  This is great for WPF since it uses DirectX for rendering.
 
-Wine is typically used to run applications out of the box. This is a fairly high bar since any missing API or behavioral difference between Wine and Windows can result in a unusable app. If you are willing to test and make the necessary changes to your app you can be successful running your WPF apps on linux.  I have had great success getting several apps including some very large apps running with minimal changes.
+Wine is typically used to run applications out of the box. This is a fairly high bar since any missing API or behavioral difference between Wine and Windows can result in a unusable app. If you are willing to test and make any necessary changes you can be successful running your WPF apps on Linux.  I have had great success getting several applications, including some very large WPF apps running on Linux with minimal changes.
 
 ## Getting Started
 
-First you need to port your WPF application to .NET Core. There are lots of great documents out there on how to poert a WPF application to .NET Core. Microsoft's [Migration](https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework) page is a great place to start.
+The first step needed to get your app up and running is to port it to .NET Core if it is not already on .NET Core. There are lots of great documents out there on how to port a WPF application to .NET Core. Microsoft's [Migration](https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework) page is a great place to start.
 
-Once your app is working great on Windows you can give it a try on Linux.  It is a lot easier to debug and fix issues on Windows than it is on Linux.  Make sure that you are happy with your app on Windows before trying it on Linux.
+Once your app is working great on Windows you can give it a try on Linux. It is a lot easier to debug and fix issues on Windows than it is on Linux. Make sure that you are happy with your app on Windows before trying it on Linux.
 
 ### Install Wine on your Linux computer
 
 .NET Core WPF Apps work well with current versions of Wine, but you may run into issues with older versions. I have tested various apps with [Wine 4.21](https://www.winehq.org/news/2019112901).
 
-Follow the instructions on the [Wine Installation](https://wiki.winehq.org/Download) page to install the Wine which is compatible with your distribution.  Once wine is installed you need to set it up. Running winecfg will is an easy way to get wine to setup the configuration directory.
+Follow the instructions on the [Wine Installation](https://wiki.winehq.org/Download) page to install the Wine which is compatible with your distribution. I have had good success installing the development build available from WineHQ. Once wine is installed you need to set it up. Running winecfg will is an easy way to get wine to setup the configuration directory.
 
 ![](LaunchWinecfg.png)
 
@@ -63,6 +63,8 @@ wine {location name of your app}
 Here is a picture of the [Modern WPF](https://github.com/Kinnara/ModernWpf) example application running on Linux
 ![](ModernWPFSampleApp.png)
 
+This application runs unmodifed on Linux.
+
 **Note:** I have only testing 64bit applications.  32bit should work as well but I have no proof of that.
 
 ## Calling native code
@@ -99,7 +101,7 @@ LONG WINAPI GetSystemInformation(char* systemInformation) {
 
 ```
 
-Then you can pInvoke normally
+Then pInvoke normally
 
 ``` csharp
 
@@ -114,13 +116,13 @@ I have not been able to get a debugger working with .NET Core apps running under
 
 ### Console.Writeline
 
-You can use Console.WriteLine to log any information you may need to debug issues. I highly recommend adding generous amounts of logging, asserts, and verification to your app.  When catching unexpected excetions be sure to log the exception and call stack from the exception so you can easily determine the location of the error.
+Use Console.WriteLine to log any information you may need to debug issues. I highly recommend adding generous amounts of logging, asserts, and verification to your app.  When catching unexpected excetions be sure to log the exception and call stack from the exception so you can easily determine the location of the error.
 
 I reccommend installing general exception handlers you can you catch unhandled exceptions and log them as well.
 
-Dispatcher has an [UnhandledException](https://docs.microsoft.com/en-us/dotnet/api/system.windows.threading.dispatcher.unhandledexception?view=netcore-3.0) event you should register for.
+Dispatcher has an [UnhandledException](https://docs.microsoft.com/en-us/dotnet/api/system.windows.threading.dispatcher.unhandledexception?view=netcore-3.0) event can be registed and used to log any unhandled exceptions from the dispatcher.
 
-AppDomain also has an [UnhandledException](https://docs.microsoft.com/en-us/dotnet/api/system.appdomain.unhandledexception?view=netcore-3.0) event that you should also register for.
+AppDomain also has an [UnhandledException](https://docs.microsoft.com/en-us/dotnet/api/system.appdomain.unhandledexception?view=netcore-3.0) event that can also be used to log any unhandled exceptions.
 
 ### Wine Tracing
 
@@ -143,13 +145,23 @@ export LIBGL_ALWAYS_SOFTWARE=1
 
 #### HTTP Listener
 
-#### Culture Enumeration
+The default HTTPListener for Windows uses Windows APIs as part of the implementation. Unfortunately Wine does not implement the required APIs. Luckily System.Net.HttpListener.dll can also be built so that it does not use the Windows APIs.  I setting
 
-#### File System Security APIs
+``` XML
+<ForceManagedImplementation>true</ForceManagedImplementation>
+```
+
+in the project file produces a version of HTTPListener that works on Linux.
+
+#### Other issues
+
+I ran into several other issues like culture enumeration and file system security APIs crashing.  These were all easily worked around in my applications so I did not investigate them further.
+
+The great thing is that source is available for everything (Wine, .NET Core, WPF) so it much easier to debug and fix issues than I originally expected. Fixes can also be made at any level in the stack to get and app working.
 
 ## Will WPF apps run on other OSes
 
-WPF runs on DirectX 9 so any build of Wine with a reasonable DirectX support.
+WPF runs on DirectX 9 so any build of Wine with a reasonable DirectX support. At this point I have only tried Linux.
 
 ## Whats Next
 
