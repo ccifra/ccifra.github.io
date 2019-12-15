@@ -9,17 +9,19 @@ For more information you can read up on Wine at their website: [WineHQ](https://
 
 Wine, in my experience, is mostly used to enable users to run games on Linux, which is great for the WPF use case since WPF uses DirectX for rendering.
 
+Wine is typically used to run applications out of the box. This is a fairly high bar since any missing API or behavioral difference between Wine and Windows can result in a unusable app. If you are willing to test and make the necessary changes to your app you can be successful running your WPF apps on linux.  I have had great success getting several apps including some very large apps running with minimal changes.
+
 ## Getting Started
 
-First you need to port your WPF application to .NET Core. There are lots of great documents out there on how to do this. [This](https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework) is a great place to state.
+First you need to port your WPF application to .NET Core. There are lots of great documents out there on how to poert a WPF application to .NET Core. Microsoft's [Migration](https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework) page is a great place to start.
 
-One your app is working great on Windows you can give it a try on Linux.
+Once your app is working great on Windows you can give it a try on Linux.  It is a lot easier to debug and fix issues on Windows than it is on Linux.  Make sure that you are happy with your app on Windows before trying it on Linux.
 
-### Install Wine on your Linux machine
+### Install Wine on your Linux computer
 
 .NET Core WPF Apps work well with current versions of Wine, but you may run into issues with older versions. I have tested various apps with [Wine 4.21](https://www.winehq.org/news/2019112901).
 
-Once wine is installed you need to set it up. Running winecfg will is an easy way to get wine to setup the configuration directory.
+Follow the instructions on the [Wine Installation](https://wiki.winehq.org/Download) page to install the Wine which is compatible with your distribution.  Once wine is installed you need to set it up. Running winecfg will is an easy way to get wine to setup the configuration directory.
 
 ![](LaunchWinecfg.png)
 
@@ -33,7 +35,7 @@ Once wineconfig is up and running you should also have a .wine directory in your
 
 ### Install .NET Core on Wine
 
-I find the easiest way to install .NET Core is to just copy the dotnet directory from your Windows install to the Linux machine.
+I find the easiest way to install .NET Core is to just copy the dotnet directory from your Windows install to the Linux computer.
 
 Copy the entire dotnet folder from Windows:
 ![](DotNetFromWindows.png)
@@ -48,9 +50,11 @@ You can just copy the Windows build to anywhere on your Linux machine.
 
 ### Make sure you have fonts installed
 
+When testing out various applications I often experienced odd crashes when an appropriate font was not available.  For testing purposes the easiest way to get necessary fonts is with [Winetricks](https://wiki.winehq.org/Winetricks).  Install Winetricks and then run it. From there you can install fonts available from a variety of sources.
+
 ### Run your app under Wine
 
-once you app is copied to the Linux machine you can run it under Wine:
+Once you app is copied to the Linux machine you can run it under Wine:
 
 ```
 wine {location name of your app}
@@ -58,6 +62,51 @@ wine {location name of your app}
 
 Here is a picture of the [Modern WPF](https://github.com/Kinnara/ModernWpf) example application running on Linux
 ![](ModernWPFSampleApp.png)
+
+**Note:** I have only testing 64bit applications.  32bit should work as well but I have no proof of that.
+
+## Calling native code
+
+You can customize your .NET app for Linux and call into native linux code with P/Invokes in your .NET code. The key is to create addition Wine DLLs that then call into linux libraries.
+
+The easiest way I have found to do this is to download and build the Wine source and then follow the patterns of the built-in DLLs.  The Wine [Developer Hints](https://wiki.winehq.org/Developer_Hints#Implementing_a_new_DLL) page has information on how to implement a new DLL.  You can follow these instructions to create a DLL that is specific for your application.
+
+Lets say you have a .so (examplelibrary.so) that has a method like this:
+
+``` cpp
+
+extern "C" int GetSystemInformation(char* systemInformation) {
+    // Implementation
+}
+
+```
+
+that you want to call into.  To call into it you need to make an equivalent DLL version (winExampleLibrary) that you can then pInvoke to:
+
+``` cpp
+
+LONG WINAPI GetSystemInformation(char* systemInformation) {
+    if (!impl_handle) {
+        impl_handle = wine_dlopen("examplelibrary.so", RTLD_NOW, NULL, 0);
+        if (impl_handle == NULL)
+            return -1;
+        pGetSystemInformation = wine_dlsym(impl_handle, "GetSystemInformation", NULL, 0);
+    }
+    if (pGetSystemInformation == NULL)
+        return -1; 
+    return pGetSystemInformation(systemInformation);
+}
+
+```
+
+Then you can pInvoke normally
+
+``` csharp
+
+[DllImport(winExampleLibrary")]
+private extern static unsafe int GetSystemInformation(byte* data);
+
+```
 
 ## What do you do if the app does not work
 
