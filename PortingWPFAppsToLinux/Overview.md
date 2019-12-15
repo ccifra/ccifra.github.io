@@ -1,4 +1,4 @@
-# WPF Apps on Linux With .NET Core and Wine
+# A Guide To Running WPF Apps on Linux With .NET Core and Wine
 
 ## Overview
 
@@ -11,23 +11,36 @@ Wine, in my experience, is mostly used to enable users to run games on Linux, wh
 
 ## Getting Started
 
-First you need to port your WPF to .NET Core.  There are lots of great documents out there on how to do this. [This](https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework) is a great place to state.
+First you need to port your WPF application to .NET Core. There are lots of great documents out there on how to do this. [This](https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework) is a great place to state.
 
 One your app is working great on Windows you can give it a try on Linux.
 
 ### Install Wine on your Linux machine
 
-.NET Core WPF Apps work well with current versions of Wine, but you may run into issues with older versions.  I have tested various apps with [Wine 4.21](https://www.winehq.org/news/2019112901).
+.NET Core WPF Apps work well with current versions of Wine, but you may run into issues with older versions. I have tested various apps with [Wine 4.21](https://www.winehq.org/news/2019112901).
 
-Once wine is installed you need to set it up.  Running winecfg will is an easy way to get wine to setup the configuration directory.
+Once wine is installed you need to set it up. Running winecfg will is an easy way to get wine to setup the configuration directory.
 
-When setting up the configuration directory Wine will prompt you to install Mono.  You do not need to install Mono .NET to run .NET Core applications.  You can cancel the install of Wine Mono.  Wine Gecko is also not needed.
+![](LaunchWinecfg.png)
+
+When setting up the configuration directory Wine will prompt you to install Mono. You do not need to install Mono .NET to run .NET Core applications. You can cancel the install of Wine Mono.  Wine Gecko is also not needed.
+
+![](WineMonoPrompt.png)
 
 Once wineconfig is up and running you should also have a .wine directory in your home directory:
+
+![](WineSetup.png)
 
 ### Install .NET Core on Wine
 
 I find the easiest way to install .NET Core is to just copy the dotnet directory from your Windows install to the Linux machine.
+
+Copy the entire dotnet folder from Windows:
+![](DotNetFromWindows.png)
+
+to the Program Files directory in the Wine configuration location:
+
+![](LinuxInstallofDotNetCore.png)
 
 ### Install your app on Linux
 
@@ -46,6 +59,8 @@ wine {location name of your app}
 Here is a picture of the [Modern WPF](https://github.com/Kinnara/ModernWpf) example application running on Linux
 ![](ModernWPFSampleApp.png)
 
+## Issues I have run into so far
+
 ### Rendering Issues with different Video Cards
 
 I have experienced render issues depending on what manufacturer of video card I am using.
@@ -57,7 +72,9 @@ export LIBGL_ALWAYS_SOFTWARE=1
 
 #### HTTP Listener
 
-## Issues I have run into so far
+#### Culture Enumeration
+
+#### File System Security APIs
 
 ## Will WPF apps run on other OSes
 
