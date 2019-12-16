@@ -2,26 +2,32 @@
 
 ## Overview
 
-With the release of .NET Core 3.0 and it's support for WPF it is now possible to run a WPF app Linux by running the application under Wine.
+I work on several large WPF applications that have been developed over many years. Our users only needed Windows support so WPF was an obvious choice at the time since it enabled a modern UI that ran on all Windows versions. Today our customers increasingly want to use or applications on Linux systems. We have been looking for a way to support our applications on Linux at an investment level that makes sense given the currently small, but growing, user base. And, of course, we want to maximize the investment we have already made with our WPF applications. There are several options that could be considered:
 
-For those who have not heard of Wine before, it is a compatibiliy layer which allows you to run Windows applications on Linux and other OSes.
+* Update the architecture of the applications to make the WPF specific code as small as possible and enable a per platform UI.  We can continue to use WPF on Windows and then choose something else for Linux.
+* Switch to a cross platform UI stack. With libraries like QT we could create an app that would work cross platform.
+* Switch to a HTML based UI stack. We could rearchitect our application to be an Electron app. Much of the non-UI code could be reused, but we would have to create the UI from scratch in HTML / JavaScript and update our architecture to support interop between JavaScript and our existing C# code.
+* Switch to some sort of cloud hosted application.  Platforms like Amazon App Stream enable hosting of existing Windows apps and enables use from any platform.
+
+After evaluation we were not happy with any of these solutions. They are either cost prohibitive or would result in a less desirable application. Given that the Linux customer base is somewhat of an unknown quantity we needed a solution that is initially low cost.  We also wanted a solution which provided a model that can evolve to support tailoring features to each platform as the user base grows. We went looking for a lower cost solution and we found one with Wine.
+
+With the release of .NET Core 3.0 with support for WPF it is now possible to run a WPF app Linux by running the application under Wine. For those who have not heard of Wine before, it is a compatibility layer which allows you to run Windows applications on Linux and other OSes.
 For more information you can read about Wine at their website: [WineHQ](https://www.winehq.org/)
+Wine is used a lot to enable users to run games on Linux with requires Wine. To support gaming, the Wine team invested in providing a full featured implementation of DirectX.  This is great for WPF since it uses DirectX for rendering.
 
-Wine is used a lot to enable users to run games on Linux with requires Wine. To support this Wine high quality implementation of DirectX.  This is great for WPF since it uses DirectX for rendering.
-
-Wine is typically used to run applications out of the box. This is a fairly high bar since any missing API or behavioral difference between Wine and Windows can result in a unusable app. If you are willing to test and make any necessary changes you can be successful running your WPF apps on Linux.  I have had great success getting several applications, including some very large WPF apps running on Linux with minimal changes.
+Wine is typically used to run applications out of the box. This is a high bar since any missing API or behavioral difference between Wine and Windows can result in an unusable app. If you are willing to thoroughly test and make necessary application changes, you can be successful running your WPF apps on Linux.  I have had great success getting several applications, including some very large WPF apps running on Linux with minimal changes.
 
 ## Getting Started
 
-The first step needed to get your app up and running is to port it to .NET Core if it is not already on .NET Core. There are lots of great documents out there on how to port a WPF application to .NET Core. Microsoft's [Migration](https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework) page is a great place to start.
+I theory a .NET Framework WPF application could be updated to run on Linux with Wine, but the .NET Framework license prohibits using it on any platform other than Windows. .NET Core is open source, MIT Licensed, and much more decoupled from Windows than .NET Framework. .NET Core is also where Microsoft is putting there investments these days. Given all of this the first step to get your application of Linux is to port it to .NET Core if it is not already on .NET Core. There are lots of great documents out there on how to port a WPF application to .NET Core. Microsoft's [Migration](https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework) page is a great place to start.
 
-Once your app is working great on Windows you can give it a try on Linux. It is a lot easier to debug and fix issues on Windows than it is on Linux. Make sure that you are happy with your app on Windows before trying it on Linux.
+It is a lot easier to debug and fix issues on Windows than it is on Linux so make sure your application is working great on Windows before you try it on Linux.
 
 ### Install Wine on your Linux computer
 
-.NET Core WPF Apps work well with current versions of Wine, but you may run into issues with older versions. I have tested various apps with [Wine 4.21](https://www.winehq.org/news/2019112901).
+.NET Core WPF Apps work well with current versions of Wine, but you may run into issues with older versions. I have been testing my apps with [Wine 4.21](https://www.winehq.org/news/2019112901).
 
-Follow the instructions on the [Wine Installation](https://wiki.winehq.org/Download) page to install the Wine which is compatible with your distribution. I have had good success installing the development build available from WineHQ. Once wine is installed you need to set it up. Running winecfg will is an easy way to get wine to setup the configuration directory.
+Follow the instructions on the [Wine Installation](https://wiki.winehq.org/Download) page to install the Wine distribution which is compatible with your Linux distribution. I have had good success installing the development build available from WineHQ. Once wine is installed you need to set it up. Running winecfg will is an easy way to get wine to setup the configuration directory.
 
 ![](LaunchWinecfg.png)
 
@@ -29,7 +35,7 @@ When setting up the configuration directory Wine will prompt you to install Mono
 
 ![](WineMonoPrompt.png)
 
-Once wineconfig is up and running you should also have a .wine directory in your home directory:
+Once wineconfig is up and running you should have a .wine directory in your home directory:
 
 ![](WineSetup.png)
 
@@ -37,7 +43,7 @@ Once wineconfig is up and running you should also have a .wine directory in your
 
 I find the easiest way to install .NET Core is to just copy the dotnet directory from your Windows install to the Linux computer.
 
-Copy the entire dotnet folder from Windows:
+Copy the entire dotnet folder from the Program Files directory on Windows:
 ![](DotNetFromWindows.png)
 
 to the Program Files directory in the Wine configuration location:
@@ -46,7 +52,7 @@ to the Program Files directory in the Wine configuration location:
 
 ### Install your app on Linux
 
-You can just copy the Windows build to anywhere on your Linux machine.
+You can just copy the Windows build to anywhere on your Linux machine.  I usually copy the app into my home directory for testing.
 
 ### Make sure you have fonts installed
 
@@ -56,7 +62,7 @@ When testing out various applications I often experienced odd crashes when an ap
 
 Once you app is copied to the Linux machine you can run it under Wine:
 
-```
+``` text
 wine {location name of your app}
 ```
 
@@ -65,7 +71,7 @@ Here is a picture of the [Modern WPF](https://github.com/Kinnara/ModernWpf) exam
 
 This application runs unmodifed on Linux.
 
-**Note:** I have only testing 64bit applications.  32bit should work as well but I have no proof of that.
+**Note:** I have only testing 64bit applications.
 
 ## Calling native code
 
