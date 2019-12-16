@@ -2,21 +2,21 @@
 
 ## Overview
 
-I work on several large WPF applications that have been developed over many years. When we started development our users only used Windows so WPF was an obvious choice. WPF enabled a modern UI and workflow that ran on all versions of Windows. Today our customers increasingly want to use or applications on Linux systems. We have been looking for a way to support our applications on Linux at an investment level that makes sense given the currently small, but growing, user base. We also want to maximize the investment we have already made with our WPF applications. To move to Linux we considered several options:
+I have worked on several large WPF applications that took many year to develop. When we started development, our users only used Windows, which made WPF a natural choice, because it enabled a modern UI and workflow that ran on all versions of Windows. Today our customers increasingly want to use our applications on Linux systems, so we have been looking for a way to achieve this at an investment level that makes sense given the currently small, but growing, user base. With this shift we are also looking to maximize the investment we have already made with our WPF applications. To move to Linux we considered several options:
 
 * Update the architecture of the applications to make the WPF specific code as small as possible and enable a per platform UI. We could continue to use WPF on Windows and then choose something else for Linux.
 * Switch to a cross platform UI stack. With libraries like QT we could create an app that would work cross platform.
 * Switch to a HTML based UI stack. We could rearchitect our application to be an Electron app. Much of the non-UI code could be reused, but we would have to create the UI from scratch in HTML / JavaScript and update our architecture to support interop between JavaScript and our existing C# code.
 * Switch to some sort of cloud hosted application. Platforms like Amazon App Stream enable hosting of existing Windows apps and enables use from any platform.
 
-After some evaluation we were not happy with any of these solutions. They were either cost prohibitive or would result in a less desirable application. Given that the Linux customer base is somewhat of an unknown quantity we needed a solution that is initially low cost. We also wanted a solution which provided a model that can evolve to support tailoring features to each platform as the user base grows. We went looking for a lower cost solution and we found one with Wine.
+After some evaluation we were not happy with any of these solutions. They were either cost prohibitive or would have resulted in a less desirable application. Given the unknown size of the Linux customer base, we needed a solution that is initially low cost, and provided a model that could evolve to support tailoring features to each platform as the user base grows. We found the solution to these problems with Wine.
 
 With .NET Core 3.0's support for WPF, a WPF application can run on Linux under Wine. Wine is a compatibility layer which allows Windows applications on Linux and other OSes, include .NET Core Windows applications.
 More information about Wine is available at the [WineHQ](https://www.winehq.org/) website.
 
-Wine is used a lot to enable users to run games on Linux. To support gaming, the Wine team invested in providing a full featured implementation of DirectX. This is great for WPF since it uses DirectX for rendering and from the rendering perspective is a lot like a DirectX game.
+Wine is often used because it enables users to run games on Linux. In order  to support gaming, the Wine team invested in providing a full featured implementation of DirectX. This is great for WPF since it uses DirectX for rendering and,from the rendering perspective, is a lot like a DirectX game.
 
-Wine is typically used to run applications out of the box. This is a high bar since any missing API or behavioral difference between Wine and Windows can result in an unusable app. If you are willing to thoroughly test and make necessary application changes, you can be successful running your WPF apps on Linux. I have had great success getting several applications, including some very large WPF apps running on Linux with minimal changes.
+Wine is typically used to run applications out of the box. This is a high bar since any missing API or behavioral difference between Wine and Windows can result in an unusable app. If you are willing to thoroughly test and make necessary application changes, you can be successful running your WPF apps on Linux. I've had great success getting several applications, including some very large WPF apps, running on Linux with minimal changes.
 
 ## Getting Started
 
@@ -24,13 +24,13 @@ Wine is typically used to run applications out of the box. This is a high bar si
 
 In theory, a .NET Framework WPF application could be updated to run on Linux with Wine. .Net Framework's license prohibits use on any platform other than Windows. .NET Core is open source, MIT Licensed, and much more decoupled from Windows than .NET Framework. .NET Core is also where Microsoft is putting their investments so porting to .NET Core is a good idea even for Windows only use. Given the issues with .NET Framework, the first step towards Linux support is to port your application to .NET Core. There are many great documents available on how to port a WPF application to .NET Core. Microsoft's [Migration](https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework) page is a great place to start.
 
-It is a lot easier to debug and fix issues on Windows than it is on Linux so make sure your application is working great on Windows before you try it on Linux.
+It's much easier to debug and fix issues on Windows than on Linux, so make sure your application is working well on Windows before you try it on Linux.
 
 ### Install Wine
 
-.NET Core WPF Apps work well with current versions of Wine. You may run into issues with older versions. I have been testing my apps with [Wine 4.21](https://www.winehq.org/news/2019112901).
+.NET Core WPF Apps work well with current versions of Wine, but you may run into issues with older versions. I have been testing my apps with [Wine 4.21](https://www.winehq.org/news/2019112901).
 
-Follow the instructions on the [Wine Installation](https://wiki.winehq.org/Download) page to install a Wine package which is compatible with your Linux distribution. I have had good success installing the development build available from WineHQ directly. Once wine is installed, you need to set it up. Running winecfg is an easy way to get wine to setup the configuration directory.
+Follow the instructions on the [Wine Installation](https://wiki.winehq.org/Download) page to install a Wine package which is compatible with your Linux distribution. (I've  had success installing the development build available from WineHQ directly.) Once wine is installed, you need to set it up. Running winecfg is an easy way to get wine to setup the configuration directory.
 
 ![](LaunchWinecfg.png)
 
@@ -80,7 +80,7 @@ This application runs unmodified on Linux.
 
 You can customize your .NET app for Linux and call into native linux code with P/Invokes in your .NET code. The key is to create addition Wine DLLs that then call into linux libraries.
 
-The easiest way I have found to do this is to download and build the Wine source and then follow the patterns of the built-in DLLs. The Wine [Developer Hints](https://wiki.winehq.org/Developer_Hints#Implementing_a_new_DLL) page has information on how to implement a new DLL. You can follow these instructions to create a DLL that is specific for your application.
+The easiest way I have found to do this is to download and build the Wine source and then follow the patterns of the built-in DLLs. The Wine [Developer Hints](https://wiki.winehq.org/Developer_Hints#Implementing_a_new_DLL) page has information on how to implement a new DLL. You can follow these instructions to create a DLL that is specific for your application. 
 
 Lets say you have a .so (examplelibrary.so) that has a method like this:
 
@@ -139,7 +139,7 @@ Wine is good at letting you know when your application calls unimplemented or pa
 
 In addition to the standard tracing of Wine you can configure even more event logging, including logging every call into Wine, to help you track down issues. More information about debug logging is available on Wine HQ's [Developer Guide](https://wiki.winehq.org/Wine_Developer%27s_Guide/Debug_Logging)
 
-Also the Wine [Debugging Hints](https://wiki.winehq.org/Debugging_Hints) may provide some insights.
+The Wine [Debugging Hints](https://wiki.winehq.org/Debugging_Hints) may also provide some insights.
 
 ## Issues I Ran Into
 
@@ -164,9 +164,9 @@ in the project file produces a version of HTTPListener that works on Linux.
 
 ### Other Issues
 
-I ran into several other issues like culture enumeration and file system security APIs crashing. These were all easily worked around in my applications so I did not investigate them further.
+I ran into several other issues like culture enumeration and file system security APIs crashing. These were all easily worked around in my applications, so I didn't investigate them further.
 
-The great thing is that source is available for everything (Wine, .NET Core, WPF) so it much easier to debug and fix issues than I originally expected. Fixes can also be made at any level in the stack to get and app working.
+The great thing is that source is available for everything (Wine, .NET Core, WPF), so it much easier to debug and fix issues than I originally expected. Fixes can also be made at any level in the stack to get an app working.
 
 ## Will WPF apps run on other OSes
 
@@ -182,7 +182,7 @@ When you run a WPF application on Linux as documented here you end up with an ap
 * Green - .NET assemblies
 * Gray - Native Linux libraries
 
-This is a pretty good place to be. The vast majority of code is shared between Windows and Linux. The application runs as a Linux process, integrates well with desktop environments, and has access to the file system and many OS services. Calling native code needs special work and not have a debugger can make finding and fixing issues a challenge.
+This is a pretty good place to be. The vast majority of code is shared between Windows and Linux, the application runs as a Linux process, integrates well with desktop environments, and has access to the file system and many OS services. However, this model does have challenges as calling native code requires special work and not having a debugger can make finding and fixing issues difficult.
 
 It would be great to be able to switch to .NET Core for Linux, keep using WPF, and have WPF applications continue to work for the most part. Then the applications would have a boxology like this
 
