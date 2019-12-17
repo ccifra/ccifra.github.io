@@ -1,28 +1,28 @@
-# A Developers Guide to Running WPF Apps On Linux With .NET Core and Wine
+# How to Run WPF Apps On Linux With .NET Core and Wine
 
 ## Overview
 
-I have worked on several large WPF applications that took many years to develop. When we started development our users only used Windows, which made WPF a natural choice because it enabled a modern UI and workflow that ran on all versions of Windows. Today our customers increasingly want to use our applications on Linux systems, so we have been looking for a way to achieve this at an investment level that makes sense given the current size of the user base. With this shift we are also looking to maximize the investment we have already made with our WPF applications. To move to Linux we considered several options:
+I have worked on several large WPF applications that took many years to create. When we started development, our users only used Windows, which made WPF a natural choice. WPF provides a modern UI and workflow that ran on all versions of Windows. Today, our customers increasingly want to use our applications on Linux, so we have been looking for a way to achieve this at an investment level that makes sense given the current size of the user base. With this shift, we are also looking to maximize the investments we have already made with our WPF applications. To move to Linux, we considered several options:
 
-* Update the architecture of the applications to make the WPF specific code as small as possible and enable a per platform UI. We could continue to use WPF on Windows and then choose something else for Linux.
-* Switch to a cross platform UI stack. With libraries like QT we could create an app that would work cross platform.
-* Switch to a HTML based UI stack. We could rearchitect our application to be an Electron app. Much of the non-UI code could be reused, but we would have to create the UI from scratch in HTML / JavaScript and update our architecture to support interop between JavaScript and our existing C# code.
-* Switch to some sort of cloud hosted application. Platforms like Amazon App Stream enable hosting of existing Windows apps and enables use from any platform.
+* Update the architecture of the applications to make the WPF-specific code as small as possible, and enable a per-platform UI. We could continue to use WPF on Windows and choose something else for Linux.
+* Switch to a cross-platform UI stack. With libraries like QT, we could create an app that would work cross-platform.
+* Switch to a HTML-based UI stack. We could rearchitect our application to be an Electron app. Much of the non-UI code could be reused, but we would have to recreate the UI from scratch in HTML / JavaScript and update our architecture to support interop between JavaScript and our existing C# code.
+* Switch to some sort of cloud-hosted application. Platforms like Amazon App Stream enable hosting of existing Windows apps and enable use from any platform.
 
-After some evaluation we were not happy with any of these solutions. They were either cost prohibitive or would have resulted in a less desirable application. Given the unknown size of the Linux customer base, we needed a solution that is initially low cost, and provided a model that could evolve to support tailoring features to each platform as the user base grows. We found the solution to these problems with Wine.
+After some evaluation, we were not happy with any of these solutions. They were either cost prohibitive or would have resulted in a less desirable application. Given the size of the Linux customer base, we needed a solution that is initially low cost, and provided a model that could evolve to support tailoring features to each platform as the user base grows. We found the solution to these problems with Wine.
 
 With .NET Core 3.0's support for WPF, a WPF application can run on Linux under Wine. Wine is a compatibility layer which allows Windows applications on Linux and other OSes, include .NET Core Windows applications.
 More information about Wine is available at the [WineHQ](https://www.winehq.org/) website.
 
-Wine is often used to enable users to run games on Linux. In order  to support gaming, the Wine team invested in providing a full featured implementation of DirectX. This is great for WPF since it uses DirectX for rendering and, from the rendering perspective, is a lot like a DirectX game.
+Wine is often used to enable users to run games on Linux. In order  to support gaming, the Wine team invested in providing a full-featured implementation of DirectX. This is great for WPF, since it uses DirectX for rendering, and, from the rendering perspective, is a lot like a DirectX game.
 
-Wine is typically used to run applications out of the box. This is a high bar since any missing API or behavioral difference between Wine and Windows can result in an unusable app. If you are willing to thoroughly test and make necessary application changes, you can be successful running your WPF apps on Linux. I've had great success getting several applications, including some very large WPF apps, running on Linux with minimal changes.
+Wine is typically used to run applications out of the box. This is a high bar, since any missing API or behavioral difference between Wine and Windows can result in an unusable app. If you are willing to thoroughly test and make necessary application changes, you can be successful running your WPF apps on Linux. I've had great success getting several applications, including some very large WPF apps, running on Linux with minimal changes.
 
 ## Getting Started
 
 ### Port to .NET Core
 
-In theory, a .NET Framework WPF application could be updated to run on Linux with Wine. .Net Framework's license prohibits use on any platform other than Windows. .NET Core, on the other hand, is open source, MIT Licensed, and much more decoupled from Windows than .NET Framework. .NET Core is also where Microsoft is putting their investments so porting to .NET Core is a good idea even for Windows only use. Given the issues with .NET Framework, the first step towards Linux support is to port your application to .NET Core. There are many great documents available on how to port a WPF application to .NET Core. Microsoft's [Migration](https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework) page is a great place to start.
+In theory, a .NET Framework WPF application could be updated to run on Linux with Wine. However, .NET Framework's license prohibits use on any platform other than Windows. .NET Core is open source and cross-platform. .NET Core is also where Microsoft is putting their .NET investment, so porting to .NET Core is a good idea even for Windows-only use. Given the issues with .NET Framework, the first step towards Linux support is to port your application to .NET Core. There are many great documents available on how to port a WPF application to .NET Core. Microsoft's [Migration](https://docs.microsoft.com/en-us/dotnet/desktop-wpf/migration/convert-project-from-net-framework) page is a great place to start.
 
 It's much easier to debug and fix issues on Windows than on Linux, so make sure your application is working well on Windows before you try it on Linux.
 
