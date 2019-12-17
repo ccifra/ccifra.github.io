@@ -70,7 +70,8 @@ wine {location name of your app}
 ```
 
 Here is the [Modern WPF](https://github.com/Kinnara/ModernWpf) example application running on Linux:
-![](ModernWPFSampleApp.png)
+
+![](WPFDemo.gif)
 
 This application runs unmodified on Linux.
 
