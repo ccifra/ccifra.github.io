@@ -69,13 +69,13 @@ Once your app is copied to the Linux machine, you can run it under Wine:
 wine {location name of your app}
 ```
 
-Here is the [Modern WPF](https://github.com/Kinnara/ModernWpf) example application running on Linux:
+Here is a screen capture [Modern WPF](https://github.com/Kinnara/ModernWpf) example application running on Linux:
 
 ![](WPFDemo.gif)
 
 This application runs unmodified on Linux.
 
-**Note:** I have only testing 64-bit applications.
+**Note:** I have only tested 64-bit applications.
 
 ## Calling Native Code
 
@@ -182,7 +182,7 @@ When you run a WPF application on Linux as documented here, you end up with an a
 * Green - .NET assemblies
 * Gray - Native Linux libraries
 
-This is a pretty good place to be. The vast majority of code is shared between Windows and Linux, the application runs as a Linux process, integrates well with desktop environments, and has access to the file system and many OS services. However, this model does have challenges. Calling native code requires special work, and not having a debugger can make finding and fixing issues difficult.
+This is a pretty good place to be. The vast majority of code is shared between Windows and Linux. The application runs as a Linux process, integrates well with desktop environments, and has access to the file system and many OS services. However, this model does have challenges. Calling native code requires special work, and not having a debugger can make finding and fixing issues difficult.
 
 It would be great to be able to switch to .NET Core for Linux, keep using WPF, and have WPF applications continue to work. Then the applications would have a boxology like this
 
