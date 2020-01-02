@@ -1,4 +1,4 @@
-# How to Run WPF Apps On Linux With .NET Core and Wine
+# A developers guide to running WPF apps on Linux with .NET Core and Wine
 
 ## Overview
 
@@ -18,7 +18,7 @@ Wine is often used to enable users to run games on Linux. In order  to support g
 
 Wine is typically used to run applications out of the box. This is a high bar, since any missing API or behavioral difference between Wine and Windows can result in an unusable app. If you are willing to thoroughly test and make necessary application changes, you can be successful running your WPF apps on Linux. I've had great success getting several applications, including some very large WPF apps, running on Linux with minimal changes.
 
-## Getting Started
+## Getting started
 
 ### Port to .NET Core
 
@@ -30,17 +30,19 @@ It's much easier to debug and fix issues on Windows than on Linux, so make sure 
 
 .NET Core WPF Apps work well with current versions of Wine, but you may run into issues with older versions. I have been testing my apps with [Wine 4.21](https://www.winehq.org/news/2019112901).
 
-Follow the instructions on the [Wine Installation](https://wiki.winehq.org/Download) page to install a Wine package that is compatible with your Linux distribution. I've  had success installing the development build available from WineHQ directly. Once Wine is installed, you need to set it up. Running `winecfg` is an easy way to get Wine to setup the configuration directory.
+Follow the instructions on the [Wine Installation](https://wiki.winehq.org/Download) page to install a Wine package that is compatible with your Linux distribution. I've  had success installing the development build available from WineHQ directly. Once Wine is installed, you need to set it up. Running `winecfg` is an easy way to get Wine to setup the Wine prefix (configuration) directory.
 
 ![](LaunchWinecfg.png)
 
-When setting up the configuration directory, Wine will prompt you to install Mono. You do not need to install Mono .NET to run .NET Core applications, so you can cancel the install of Wine Mono. Wine Gecko is also not needed.
+When setting up the Wine prefix directory, Wine will prompt you to install Mono. You do not need to install Mono .NET to run .NET Core applications, so you can cancel the install of Wine Mono. Wine Gecko is also not needed.
 
 ![](WineMonoPrompt.png)
 
-Once wineconfig is up and running, you should have a .wine directory in your home directory:
+Once wineconfig is running, there should be a .wine directory in your home directory:
 
 ![](WineSetup.png)
+
+Nothing needs to be changed in WineConfig so it can be closed.
 
 ### Setup .NET Core on Wine
 
@@ -53,15 +55,15 @@ to the Program Files directory in the Wine configuration location:
 
 ![](LinuxInstallofDotNetCore.png)
 
-### Install / Copy Your Application To Linux
+### Install / copy your application to Linux
 
 Applications that can run from the build output directory can be copied from Windows to anywhere on your Linux machine. I usually copy the application into my home directory for testing. Wine also supports setting registry keys or environment variables. If your required setup has more complex requirements, you may have more difficulty, but Wine supports a surprising number of Windows features.
 
-### Make Sure Fonts Are Available
+### Make sure fonts are available
 
 When testing out various applications, I often experienced odd crashes when an appropriate font was not available. For testing purposes, the easiest way to get necessary fonts is with [Winetricks](https://wiki.winehq.org/Winetricks). Install and run Winetricks. From there, you can install fonts available from a variety of sources.
 
-### Run Your Application Under Wine
+### Run your application under Wine
 
 Once your app is copied to the Linux machine, you can run it under Wine:
 
@@ -77,7 +79,7 @@ This application runs unmodified on Linux.
 
 **Note:** I have only tested 64-bit applications.
 
-## Calling Native Code
+## Calling native code
 
 You can customize your .NET app for Linux and call into native linux code with P/Invokes in your .NET code. The key is to create addition Wine DLLs that then call into Linux libraries.
 
@@ -120,7 +122,7 @@ private extern static unsafe int GetSystemInformation(byte* data);
 
 ```
 
-## What To Do If Your Application Does Not Work
+## What to do if your application does not work
 
 I have not been able to get a debugger working with .NET Core apps running under Wine, so you will have to rely on logging methods to debug issues that you run into.
 
@@ -142,15 +144,17 @@ In addition to the standard tracing of Wine, you can configure even more event l
 
 The Wine [Debugging Hints](https://wiki.winehq.org/Debugging_Hints) may also provide some insights.
 
-## Issues I Ran Into
+## Issues I ran into
 
-### Rendering Issues with different Video Cards
+### Rendering issues with different video cards
 
 I have experienced render issues depending on which manufacturer of video card I am using. NVIDIA does the best with only minor render issues. AMD does a decent job. Intel is basically unusable. If you experience render issues (artifacts, clipping issues, ...) you will likely have better luck if you switch to software rendering. You can do this by setting LIBGL_ALWAYS_SOFTWARE to 1.
 
 ``` text
 export LIBGL_ALWAYS_SOFTWARE=1
 ```
+
+With the applications I have tested using software rendering does not impact performance of the UI much at all, but it may increase CPU usage.
 
 ### HTTP Listener
 
@@ -162,7 +166,7 @@ The default HTTPListener for Windows uses Windows APIs as part of its implementa
 
 in the project file produces a version of HTTPListener that works on Linux.
 
-### Other Issues
+### Other issues
 
 I ran into several other issues, like culture enumeration and file system security APIs crashing. These were all easily worked around in my applications, so I didn't investigate them further.
 
