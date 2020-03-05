@@ -124,7 +124,18 @@ private extern static unsafe int GetSystemInformation(byte* data);
 
 ## What to do if your application does not work
 
-I have not been able to get a debugger working with .NET Core apps running under Wine, so you will have to rely on logging methods to debug issues that you run into.
+Most debuggers will not work to debug a .NET Core apps running under Wine.  I have tried remote debugging with Visual Studio and Visual Studio Code without success.  One debugger that does work is is [dnSpy](https://github.com/0xd4d/dnSpy).  It is a very nice debugger that can run under Wine and debug .NET Core applications that are also running under Wine.
+
+To use dnSpy run it under wine just like any other application:
+
+``` text
+cd {location of dnSpy}
+wine dnSpy.exe
+```
+
+Once dnSpy is running you should be able to attach to any .NET Core application that is running under wine.
+
+In addition to using dnSpy, logging is often a convenient way to debug issues that you run into.
 
 ### Console.WriteLine
 
